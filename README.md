@@ -13,6 +13,11 @@
 > * **Plan Of Action Document:** Kirk, Jessica
 > * **Wireframe Diagram:** Hudson, Mike, Jessica
 
+> **Front End Developer(s):** Jessica, Kirk
+> **Back End Developer(s):** Mike, Hudson
+> **SCRUM Master:** Hudson
+> **Quality Control:** Cindy
+
 **Trello Board Link:** https://trello.com/invite/b/SUR7RdCE/c251b19ad5238d939be39112df3a1fbf/comp1800termproject
 
 ## Long Term Goal: 
