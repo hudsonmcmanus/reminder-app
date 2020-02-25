@@ -1,1 +1,1 @@
-# remainder-app
+# Reminder App
