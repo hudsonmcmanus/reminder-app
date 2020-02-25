@@ -8,8 +8,17 @@
 * Mike Sampson
 
 ### Sprint 1 - Roles: 
-> * Cindy: 
-> * Kirk:
-> * Jessica:
-> * Hudson:
-> * Mike:
+> * **Trello Board:** Cindy, Mike  
+> * **Set Up GitHub Repository:** Hudson
+> * **Plan Of Action Document:** Kirk, Jessica
+> * **Wireframe Diagram:** Hudson
+
+**Trello Board Link:** https://trello.com/invite/b/SUR7RdCE/c251b19ad5238d939be39112df3a1fbf/comp1800termproject
+
+## Long Term Goal: 
+> Create a functional reminder app with all the functionalities described 
+
+## Short Term Goal: 
+> * Define Sprint Backlog tasks 
+> * Create a draft of the reminder app from the wireframe diagram
+> * Assign tasks from Trello Board to team members 
