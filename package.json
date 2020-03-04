@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/hudsonmcmanus/reminder-app/issues"
   },
-  "homepage": "https://github.com/hudsonmcmanus/reminder-app#readme"
+  "homepage": "https://github.com/hudsonmcmanus/reminder-app#readme",
+  "dependencies": {
+    "bcrypt": "^4.0.1",
+    "express": "^4.17.1",
+    "log-symbols": "^3.0.0",
+    "mongoose": "^5.9.3",
+    "morgan": "^1.9.1"
+  }
 }
