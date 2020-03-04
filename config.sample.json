@@ -1,4 +1,5 @@
 {
 	"port": 3000,
-	"mongoURL": "mongodb://localhost:27017/reminders"
+	"mongoURL": "mongodb://localhost:27017/reminders",
+	"jwtSecret": "verysecrettestkey123454321"
 }

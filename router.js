@@ -4,7 +4,19 @@ const router = express.Router();
 const { Reminder, User } = require('./database');
 
 router.get('/', (req, res) => {
-	res.end('hello');
+	const { payload } = req;
+	if (payload) {
+		res.send('Hello ' + payload.id);
+	} else {
+		res.send('Not logged in');
+	}
+});
+
+router.get('/login', (req, res) => {
+	res.login({
+		id: Math.floor(Math.random() * 100000)
+	});
+	res.redirect('/');
 });
 
 // Create some users (temporary)
