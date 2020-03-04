@@ -7,6 +7,17 @@
 * Hudson McManus
 * Mike Sampson
 
+### Sprint 2 Action Items:
+- Start on Draft Front-End (Cindy)
+- Start on Draft DB (Mike)
+- Trello tasks (Everybody)
+    - Add yourselves as Members to user stories
+    - Break down into tasks if necessary
+    - Move tasks into sprint backlog / in progress for this sprint
+- Start on your features (Everybody)
+
+--- 
+
 ### Sprint 1 - Roles: 
 > * **Trello Board:** Cindy, Mike, Kirk
 > * **Set Up GitHub Repository:** Hudson
