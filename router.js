@@ -5,8 +5,9 @@ const { Reminder, User } = require('./database');
 const { grabUser } = require('./middleware');
 
 router.get('/', grabUser, (req, res) => {
-	const { user } = req;
+	const { payload, user } = req;
 	res.render('home', {
+		payload,
 		user
 	});
 });

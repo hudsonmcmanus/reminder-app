@@ -11,7 +11,14 @@
 	{{#if user}}
 	<p>
 		You are logged in!
-		<pre>{{user}}</pre>
+	</p>
+	<p>
+		JWT:
+		<pre>{{jsonPretty payload}}</pre>
+	</p>
+	<p>
+		User:
+		<pre>{{jsonPretty user}}</pre>
 	</p>
 	{{else}}
 	<a href="/login">Login</a>
