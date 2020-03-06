@@ -8,7 +8,6 @@ const { grabUser } = require('./middleware');
 
 router.get('/', grabUser, (req, res) => {
 	const { user } = req;
-	console.log(typeof user.username, user.username);
 	res.render('home', {
 		user
 	});
@@ -38,6 +37,33 @@ router.post('/login', async (req, res) => {
 			error: 'User not found'
 		});
 	}
+});
+
+router.get('/register', (req, res) => {
+	res.render('register');
+});
+
+router.post('/register', async (req, res) => {
+	const { username, password, passwordRepeat } = req.body;
+	if (await User.exists({ username })) {
+		res.render('register', {
+			error: 'Username already taken'
+		});
+		return;
+	}
+	if (password !== passwordRepeat) {
+		res.render('register', {
+			error: 'Passwords do not match'
+		});
+		return;
+	}
+	const user = new User({
+		username,
+		password
+	});
+	await user.save();
+	res.login({ id: user._id });
+	res.redirect('/');
 });
 
 // Create some users (temporary)
