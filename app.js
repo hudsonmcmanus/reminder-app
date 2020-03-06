@@ -25,7 +25,11 @@ app.use(
 app.engine(
 	'handlebars',
 	expressHandlebars({
-		defaultLayout: false
+		defaultLayout: false,
+		helpers: {
+			json: any => JSON.stringify(any),
+			jsonPretty: any => JSON.stringify(any, null, '  ')
+		}
 	})
 );
 app.set('view engine', 'handlebars');
