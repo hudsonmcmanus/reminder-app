@@ -2,17 +2,42 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Login</title>
+	<title>Remindr</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="/main.css" />
 </head>
 
 <body>
-	<form action="/login" method="post">
-		<input type="text" name="username"><br />
-		<input type="password" name="password"><br />
-		<input type="submit" value="Login">
-	</form>
+	{{> navbar}}
+
+	<header class="page-header header container-fluid">
+		<div class="overlay">
+			<div class="wrapper fadeInDown">
+				<div id="formContent">
+					{{#if error}}
+					<b>{{error}}</b>
+					{{/if}}
+					<!-- Tabs Titles -->
+
+					<!-- Icon -->
+					<div class="fadeIn first">
+						<img src="/images/remindr-logo.png" id="icon" alt="Remindr logo" />
+					</div>
+
+					<!-- Login Form -->
+					<form method="POST">
+						<input type="text" class="fadeIn second" name="username" placeholder="username" />
+						<input type="password" class="fadeIn third" name="password" placeholder="password" />
+						<input type="submit" class="fadeIn fourth" value="Log In" />
+					</form>
+				</div>
+			</div>
+		</div>
+	</header>
+	<script src="/jquery-3.3.1.min.js"></script>
+	<script src="/bootstrap/js/bootstrap.min.js"></script>
 </body>
 
 </html>

@@ -7,9 +7,9 @@ const { Reminder, User } = require('./database');
 const { grabUser } = require('./middleware');
 
 router.get('/', grabUser, (req, res) => {
-	const { payload, user } = req;
+	const { user } = req;
+	console.log(typeof user.username, user.username);
 	res.render('home', {
-		payload,
 		user
 	});
 });
@@ -20,17 +20,23 @@ router.get('/login', (req, res) => {
 
 router.post('/login', async (req, res) => {
 	const { username, password } = req.body;
-	const user = await User.findOne({ username }, '_id password').exec();
+	const user = await User.findOne({ username }, '_id password')
+		.lean()
+		.exec();
 	if (user) {
 		const isMatch = await bcrypt.compare(password, user.password);
 		if (isMatch) {
 			res.login({ id: user._id });
 			res.redirect('/');
 		} else {
-			res.send('Invalid password');
+			res.render('login', {
+				error: 'Invalid password'
+			});
 		}
 	} else {
-		res.send('User not found');
+		res.render('login', {
+			error: 'User not found'
+		});
 	}
 });
 
@@ -82,5 +88,8 @@ router.get('/add-mock-reminder', async (req, res) => {
 
 	res.json(reminder);
 });
+
+// Serve files in the static folder
+router.use(express.static('static'));
 
 module.exports = router;
