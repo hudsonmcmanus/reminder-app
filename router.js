@@ -34,16 +34,6 @@ router.post('/login', async (req, res) => {
 	}
 });
 
-// router.get('/login', async (req, res) => {
-// 	const user = await User.findOne({ username: 'mike' }, '_id')
-// 		.lean()
-// 		.exec();
-// 	res.login({
-// 		id: user._id
-// 	});
-// 	res.redirect('/');
-// });
-
 // Create some users (temporary)
 router.get('/add-mock-users', async (req, res) => {
 	const count = await User.countDocuments().exec();
