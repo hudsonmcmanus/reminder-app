@@ -8,7 +8,6 @@ const { grabUser } = require('./middleware');
 
 router.get('/', grabUser, (req, res) => {
 	const { user } = req;
-	console.log(typeof user.username, user.username);
 	res.render('home', {
 		user
 	});
