@@ -2,9 +2,23 @@ const express = require('express');
 const router = express.Router();
 
 const { Reminder, User } = require('./database');
+const { grabUser } = require('./middleware');
 
-router.get('/', (req, res) => {
-	res.end('hello');
+router.get('/', grabUser, (req, res) => {
+	const { user } = req;
+	res.render('home', {
+		user
+	});
+});
+
+router.get('/login', async (req, res) => {
+	const user = await User.findOne({ username: 'mike' }, '_id')
+		.lean()
+		.exec();
+	res.login({
+		id: user._id
+	});
+	res.redirect('/');
 });
 
 // Create some users (temporary)
