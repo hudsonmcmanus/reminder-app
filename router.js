@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+const bcrypt = require('bcrypt');
+
 const { Reminder, User } = require('./database');
 const { grabUser } = require('./middleware');
 
@@ -12,15 +14,35 @@ router.get('/', grabUser, (req, res) => {
 	});
 });
 
-router.get('/login', async (req, res) => {
-	const user = await User.findOne({ username: 'mike' }, '_id')
-		.lean()
-		.exec();
-	res.login({
-		id: user._id
-	});
-	res.redirect('/');
+router.get('/login', (req, res) => {
+	res.render('login');
 });
+
+router.post('/login', async (req, res) => {
+	const { username, password } = req.body;
+	const user = await User.findOne({ username }, '_id password').exec();
+	if (user) {
+		const isMatch = await bcrypt.compare(password, user.password);
+		if (isMatch) {
+			res.login({ id: user._id });
+			res.redirect('/');
+		} else {
+			res.send('Invalid password');
+		}
+	} else {
+		res.send('User not found');
+	}
+});
+
+// router.get('/login', async (req, res) => {
+// 	const user = await User.findOne({ username: 'mike' }, '_id')
+// 		.lean()
+// 		.exec();
+// 	res.login({
+// 		id: user._id
+// 	});
+// 	res.redirect('/');
+// });
 
 // Create some users (temporary)
 router.get('/add-mock-users', async (req, res) => {

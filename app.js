@@ -3,6 +3,7 @@ const config = require('./config.json');
 const express = require('express');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const expressHandlebars = require('express-handlebars');
 const logSymbols = require('log-symbols');
 const { mongoose } = require('./database');
@@ -14,6 +15,7 @@ app.use(morgan('dev'));
 
 // jwt stuff
 app.use(cookieParser());
+app.use(bodyParser.urlencoded());
 app.use(
 	jwt({
 		secret: config.jwtSecret,

@@ -65,15 +65,6 @@ userSchema.pre('save', async function() {
 	}
 });
 
-userSchema.methods.comparePassword = async function(candidatePassword, cb) {
-	try {
-		const isMatch = await bcrypt.compare(candidatePassword, this.password);
-		cb(null, isMatch);
-	} catch (err) {
-		cb(err);
-	}
-};
-
 const Reminder = mongoose.model('Reminder', reminderSchema);
 const User = mongoose.model('User', userSchema);
 
