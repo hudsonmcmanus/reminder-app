@@ -2,19 +2,21 @@ const express = require('express');
 const router = express.Router();
 
 const { Reminder, User } = require('./database');
+const { grabUser } = require('./middleware');
 
-router.get('/', (req, res) => {
-	const { payload } = req;
-	if (payload) {
-		res.send('Hello ' + payload.id);
-	} else {
-		res.send('Not logged in');
-	}
+router.get('/', grabUser, (req, res) => {
+	const { user } = req;
+	res.render('home', {
+		user
+	});
 });
 
-router.get('/login', (req, res) => {
+router.get('/login', async (req, res) => {
+	const user = await User.findOne({ username: 'mike' }, '_id')
+		.lean()
+		.exec();
 	res.login({
-		id: Math.floor(Math.random() * 100000)
+		id: user._id
 	});
 	res.redirect('/');
 });

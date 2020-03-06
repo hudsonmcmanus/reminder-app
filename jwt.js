@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
 
+// Parse and renew jwt tokens
+// Sets req.payload to an object if it has a valid jwt token
 module.exports = ({ secret, expireIn }) => (req, res, next) => {
 	const signCookie = payload => {
 		if (expireIn) {

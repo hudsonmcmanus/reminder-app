@@ -20,6 +20,7 @@
     "bcrypt": "^4.0.1",
     "cookie-parser": "^1.4.4",
     "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
     "jsonwebtoken": "^8.5.1",
     "log-symbols": "^3.0.0",
     "mongoose": "^5.9.3",
