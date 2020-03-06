@@ -2,27 +2,74 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Test</title>
+	<title>Remindr</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="/main.css" />
 </head>
 
 <body>
-	{{#if user}}
-	<p>
-		You are logged in!
-	</p>
-	<p>
-		JWT:
-		<pre>{{jsonPretty payload}}</pre>
-	</p>
-	<p>
-		User:
-		<pre>{{jsonPretty user}}</pre>
-	</p>
-	{{else}}
-	<a href="/login">Login</a>
-	{{/if}}
+	{{> navbar}}
+
+	<header class="page-header header container-fluid">
+		<div class="overlay"></div>
+		<div class="description">
+			<!--Text can go here-->
+			<h1>Track all your reminders and never worry about forgetting them</h1>
+			{{#if user}}
+			<p>(User {{user.username}} is logged in)</p>
+			{{/if}}
+			<a href="/login"><button class="btn btn-outline-secondary btn-lg">Login</button></a>
+		</div>
+	</header>
+
+	<div class="container features">
+		<div class="row justify-content-center">
+			<div class="col-lg-6 col-md-4 col-sm-12">
+				<h3 class="feature-title">About Remindr</h3>
+				<img src="/images/bell-icon.png" class="img-fluid round" />
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+					interdum quam odio, quis placerat ante luctus eu. Sed aliquet dolor
+					id sapien rutrum, id vulputate quam iaculis.
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<footer class="page-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-md-8 col-sm-12">
+					<h6 class="text-uppercase font-weight-bold">
+						Additional Information
+					</h6>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+						interdum quam odio, quis placerat ante luctus eu. Sed aliquet
+						dolor id sapien rutrum, id vulputate quam iaculis.
+					</p>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+						interdum quam odio, quis placerat ante luctus eu. Sed aliquet
+						dolor id sapien rutrum, id vulputate quam iaculis.
+					</p>
+				</div>
+				<div class="col-lg-4 col-md-4 col-sm-12">
+					<h6 class="text-uppercase font-weight-bold">Contact</h6>
+					<p>
+						BCIT <br />info@mywebsite.com <br />+ 01 234 567 88 <br />+ 01 234
+						567 89
+					</p>
+				</div>
+			</div>
+			<div class="footer-copyright text-center">The Team Team√</div>
+		</div>
+	</footer>
+
+	<script src="/jquery-3.3.1.min.js"></script>
+	<script src="/bootstrap/js/bootstrap.min.js"></script>
 </body>
 
 </html>
