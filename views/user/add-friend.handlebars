@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Remindr</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+
+<body>
+	{{> navbar}}
+	<div class="container">
+		<div class="row mt-4">
+			<div class="col"></div>
+			<div class="col-6">
+				<input id='searchInput' onkeyup="searchUsers()" type="text" name="search" placeholder="Search">
+			</div>
+			<div class="col"></div>
+		</div>		
+	</div>
+	
+	<div class="container">
+		{{#each users}}
+			<div class="row mt-4">
+				<div class="col"></div>
+				<div class="col-6">
+					<div class="card">
+						<div class="card-body">
+							<p class="userList">
+							{{#each this}}
+								{{this.username}}
+							{{/each}}
+							</p>
+							<a href="#" class="btn btn-primary float-right">Add Friend</a>
+						</div>
+					</div>					
+				</div>
+				<div class="col"></div>						
+			</div>
+		{{/each}}
+	</div>
+
+	<script>
+		function searchUsers() {
+			let input = document.getElementById('searchInput').value;
+			input = input.toLowerCase();
+			let userList = document.getElementsByClassName('userList');
+			
+			for (i = 0; i < userList.length; i++){
+				let cardRow = userList[i].parentNode.parentNode.parentNode.parentNode;
+				if (!userList[i].innerHTML.toLowerCase().includes(input)){
+					cardRow.style.display='none';
+					console.log(cardRow);
+				}
+				else {
+					cardRow.style.display='';
+					console.log(cardRow);
+				}
+			}
+		}
+	</script>
+
+	<script src="/jquery-3.3.1.min.js"></script>
+	<script src="/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+

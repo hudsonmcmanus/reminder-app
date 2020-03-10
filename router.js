@@ -17,6 +17,12 @@ router.get('/login', (req, res) => {
 	res.render('login');
 });
 
+router.get('/add-friend', (req, res) => {
+	User.find(function(err, docs){
+		res.render('user/add-friend', {users: docs});
+	});
+});
+
 router.post('/login', async (req, res) => {
 	const { username, password } = req.body;
 	const user = await User.findOne({ username }, '_id password')
