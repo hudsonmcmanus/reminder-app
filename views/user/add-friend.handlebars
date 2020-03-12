@@ -27,37 +27,63 @@
 				<div class="col"></div>
 				<div class="col-6">
 					<div class="card">
-						<div class="card-body">
+						<div class="card-body">	
 							<p class="userList">
-							{{#each this}}
-								{{this.username}}
-							{{/each}}
-							</p>
-							<a href="#" class="btn btn-primary float-right">Add Friend</a>
+								{{username}}
+							</p>							
+							{{#if (buttonCheck this)}}
+							<form action="/add-friend" method="post">
+								<input type="hidden" id="newFriend" name="newFriend" value="{{_id}}">
+								<button type="submit" class="btn btn-primary float-right">Add Friend</button>
+							</form>
+							{{else}}
+							<button type="button" class="btn btn-secondary float-right" disabled>Friends</button>
+							{{/if}}							
 						</div>
 					</div>					
 				</div>
 				<div class="col"></div>						
 			</div>
 		{{/each}}
+		<div id="noResults" style="display: none;" class="row mt-4">
+			<div class="col">
+				<p style="text-align:center">No Results Found</p>
+			</div>			
+		</div>
 	</div>
 
 	<script>
+		
 		function searchUsers() {
+			// Get the search input
 			let input = document.getElementById('searchInput').value;
 			input = input.toLowerCase();
+			// Get all user elements
 			let userList = document.getElementsByClassName('userList');
+			let countHidden = 0;
 			
+			// Loop through the list of user elements
 			for (i = 0; i < userList.length; i++){
+				// Get the overall card element of the user
 				let cardRow = userList[i].parentNode.parentNode.parentNode.parentNode;
+				// Check if the username contains the search input
 				if (!userList[i].innerHTML.toLowerCase().includes(input)){
+					// Don't display the card element
 					cardRow.style.display='none';
-					console.log(cardRow);
+					countHidden++;
 				}
 				else {
+					// Display the card element as normal
 					cardRow.style.display='';
-					console.log(cardRow);
 				}
+			}
+			// Display "No Results Found" if all cards are hidden
+			if (countHidden == userList.length){
+				document.getElementById("noResults").style.display='';
+			}
+			// Don't display if at least one card is shown
+			else {
+				document.getElementById("noResults").style.display='none';
 			}
 		}
 	</script>

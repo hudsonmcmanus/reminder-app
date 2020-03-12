@@ -1,4 +1,4 @@
-const config = require('./config.sample.json');
+const config = require('./config.json');
 
 const express = require('express');
 const rateLimit = require('express-rate-limit');
