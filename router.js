@@ -88,6 +88,57 @@ router.post('/register', async (req, res) => {
 	res.redirect('/');
 });
 
+// Social features - find users to add as friends
+router.get('/add-friend', grabUser, (req, res) => {
+	const { user } = req;
+	// use .find() function to search for all users in database
+	// use .lean() function to have the result document as plain Javascript objects, not Mongoose Document
+	// https://mongoosejs.com/docs/tutorials/lean.html
+	User.find().lean().exec(function(err, docs){
+		res.render('user/add-friend', {
+			users: docs,
+			helpers: {
+				// Helper function to check if "Add Friend" button should be displayed
+				buttonCheck: function(userObj) {
+					// If it is the same user, don't display Add Friend Button
+					if (userObj.username == user.username){
+						return false;
+					}
+					// If already a friend, don't display Add Friend Button
+					for (let i = 0; i < user.friends.length; i++){
+						if (JSON.stringify(user.friends[i]) == JSON.stringify(userObj._id)){
+							return false;
+						}
+					}
+					// Otherwise, display Add Friend Button
+					return true;
+				}
+			}
+		});
+	});
+});
+
+// Social features - execute "Add Friend" button function
+router.post('/add-friend', grabUser, async (req, res) => {
+	const { user } = req;
+	
+	// Update the friends set within the User object
+	let doc = User.findOneAndUpdate(
+		{"username": user.username},
+		// use addToSet method to ensure no duplicates
+		{ "$addToSet": { "friends": req.body.newFriend}},
+		function(err, raw){
+			if (err){
+				console.log(err);
+			}
+		}
+	)
+	// Used to verify that the friends have been added...
+	// doc = await User.findOne({"username": user.username});
+	// console.log(doc.friends);
+	res.redirect('/add-friend');
+});
+
 // Create some users (temporary)
 router.get('/add-mock-users', async (req, res) => {
 	const count = await User.countDocuments().exec();

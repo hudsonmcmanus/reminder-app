@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Remindr</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+
+<body>
+	{{> navbar}}
+	<div class="container">
+		<div class="row mt-4">
+			<div class="col"></div>
+			<div class="col-6">
+				<input id='searchInput' onkeyup="searchUsers()" type="text" name="search" placeholder="Search">
+			</div>
+			<div class="col"></div>
+		</div>		
+	</div>
+	
+	<div class="container">
+		{{#each users}}
+			<div class="row mt-4">
+				<div class="col"></div>
+				<div class="col-6">
+					<div class="card">
+						<div class="card-body">	
+							<p class="userList">
+								{{username}}
+							</p>							
+							{{#if (buttonCheck this)}}
+							<form action="/add-friend" method="post">
+								<input type="hidden" id="newFriend" name="newFriend" value="{{_id}}">
+								<button type="submit" class="btn btn-primary float-right">Add Friend</button>
+							</form>
+							{{else}}
+							<button type="button" class="btn btn-secondary float-right" disabled>Friends</button>
+							{{/if}}							
+						</div>
+					</div>					
+				</div>
+				<div class="col"></div>						
+			</div>
+		{{/each}}
+		<div id="noResults" style="display: none;" class="row mt-4">
+			<div class="col">
+				<p style="text-align:center">No Results Found</p>
+			</div>			
+		</div>
+	</div>
+
+	<script>
+		
+		function searchUsers() {
+			// Get the search input
+			let input = document.getElementById('searchInput').value;
+			input = input.toLowerCase();
+			// Get all user elements
+			let userList = document.getElementsByClassName('userList');
+			let countHidden = 0;
+			
+			// Loop through the list of user elements
+			for (i = 0; i < userList.length; i++){
+				// Get the overall card element of the user
+				let cardRow = userList[i].parentNode.parentNode.parentNode.parentNode;
+				// Check if the username contains the search input
+				if (!userList[i].innerHTML.toLowerCase().includes(input)){
+					// Don't display the card element
+					cardRow.style.display='none';
+					countHidden++;
+				}
+				else {
+					// Display the card element as normal
+					cardRow.style.display='';
+				}
+			}
+			// Display "No Results Found" if all cards are hidden
+			if (countHidden == userList.length){
+				document.getElementById("noResults").style.display='';
+			}
+			// Don't display if at least one card is shown
+			else {
+				document.getElementById("noResults").style.display='none';
+			}
+		}
+	</script>
+
+	<script src="/jquery-3.3.1.min.js"></script>
+	<script src="/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+
