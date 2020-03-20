@@ -39,6 +39,28 @@ router.post('/login', async (req, res) => {
 	}
 });
 
+router.get('/create', (req, res) => {
+	res.render('create');
+});
+
+router.post('/create', grabUser, async (req, res) => {
+	const {title, description} = req.body;
+	const {user} = req;
+	const reminder = new Reminder({
+		name: 'Get Groceries',
+		author: user._id,
+		sharedWith: [],
+		description: 'I need to buy stuff',
+		tags: ['food', 'essentials'],
+		subtasks: ['Get eggs', 'Get milk', 'Spend money'],
+		// 1 day from now
+		date: new Date(Date.now() + 1000 * 60 * 60 * 24)
+	});
+	console.log(reminder)
+	await reminder.save();
+	res.redirect('/');
+});
+
 router.get('/register', (req, res) => {
 	res.render('register');
 });

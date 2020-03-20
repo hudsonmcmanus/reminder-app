@@ -87,6 +87,10 @@ body {
 
 /* STRUCTURE */
 
+.descriptionBox {
+    padding: 20px;
+}
+
 .wrapper {
     display: flex;
     align-items: center;

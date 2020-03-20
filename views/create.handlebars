@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+	
+<head>
+	<title>Remindr</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+
+<body>
+	{{> navbar}}
+
+	<header class="page-header header container-fluid">
+		<div class="overlay">
+			<div class="wrapper fadeInDown">
+				<div id="formContent">
+					<form action="/register" method="post">
+					<label>
+						Create A Reminder
+					</label>
+						<input type="text" name="title" placeholder="Title"><br />
+						<textarea type="textarea" name="description" placeholder="Description"></textarea><br />
+						<input type="submit" value="submit">
+						{{#if error}}
+						<p>
+							<b>Error:</b> {{error}}
+						</p>
+						{{/if}}
+					</form>
+				</div>
+			</div>
+		</div>
+	</header>
+	<script src="/jquery-3.3.1.min.js"></script>
+	<script src="/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>
