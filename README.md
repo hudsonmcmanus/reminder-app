@@ -7,6 +7,15 @@
 * Hudson McManus
 * Mike Sampson
 
+### Sprint 4 Action Items (March 24 - March 31):
+- Documentation (Kirk)
+- Promotional Landing Page (Hudson)
+- Weather Integration (Cindy)
+- Reminder Associations (Cindy/Kirk)
+- Reminder Persistence (Hudson/Jessica)
+
+---
+
 ### Sprint 2.5/3 Action Items (March 10 - March 23):
 - Reminders Modification (Jessica/Hudson)
 - Users Feature (Kirk)
