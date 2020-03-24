@@ -14,6 +14,9 @@
 - Reminder Associations (Cindy/Kirk)
 - Reminder Persistence (Hudson/Jessica)
 
+## Short Term - Sprint Goal:
+- Finish most, if not all, of the reminders app by the end of the sprint so we can spend time testing and fixing bugs
+
 ---
 
 ### Sprint 2.5/3 Action Items (March 10 - March 23):
