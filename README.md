@@ -7,7 +7,15 @@
 * Hudson McManus
 * Mike Sampson
 
-### Sprint 2 Action Items:
+### Sprint 2.5/3 Action Items (March 10 - March 23):
+- Reminders Modification (Jessica/Hudson)
+- Users Feature (Kirk)
+- Authentication (Mike)
+- Front End (Cindy)
+
+---
+
+### Sprint 2 Action Items (March 3 - March 9):
 - Start on Draft Front-End (Cindy)
 - Start on Draft DB (Mike)
 - Trello tasks (Everybody)
