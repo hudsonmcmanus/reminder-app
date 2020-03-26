@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-	
+
 <head>
 	<title>Remindr</title>
 	<meta charset="utf-8" />
@@ -10,30 +10,53 @@
 </head>
 
 <body>
-	{{> navbar}}
+	{{> navbar-landing-page}}
 
-	<header class="page-header header container-fluid">
-		<div class="overlay">
-			<div class="wrapper fadeInDown">
-				<div id="formContent">
-					<form action="/register" method="post">
-					<label>
-						Create A Reminder
-					</label>
-						<input type="text" name="title" placeholder="Title"><br />
-						<textarea type="textarea" name="description" placeholder="Description"></textarea><br />
-						<input type="submit" value="submit">
-						{{#if error}}
-						<p>
-							<b>Error:</b> {{error}}
-						</p>
-						{{/if}}
-					</form>
-				</div>
-			</div>
-		</div>
-	</header>
+	<div class="modal-fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="reminder">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-fluid">
+            <div class="modal-header">
+                <h5 class="modal-title">Create New Reminder</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{#if error}}
+					<b>{{error}}</b>
+				{{/if}}
+                <form action="/create" method="POST">
+                    <div class="form-group">
+                    <!--Get the title, description and date and time-->
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="name" placeholder="Reminder Title">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="description" placeholder="Description">
+                    </div>
+                    <div class="form-check">
+                        <label for="date">Remind Me On a Day</label>
+                        <input type="date" class="form-control" name="date" placeholder="Password">
+                    </div>
+                    <div class="form-check">
+                        <label for="time">Remind Me At a Time</label>
+                        <input type="time" class="form-control" name="time" placeholder="Password">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+
+	{{> footer}}
+
 	<script src="/jquery-3.3.1.min.js"></script>
 	<script src="/bootstrap/js/bootstrap.min.js"></script>
 </body>
+
 </html>
