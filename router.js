@@ -18,20 +18,21 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/landing-page', (req, res) => {
-	let reminders = [];
-
 	Reminder.find({})
-		.populate(reminders)
-		.exec(function (err, Reminder) {
-			for(let i = 0; i < Reminder.length; i++) {
-				reminders.push(Reminder[i]);
+		.then(reminder => {
+			const context = {
+				reminders: reminder.map(reminderProperty =>  {
+					return {
+						name: reminderProperty.name,
+						description: reminderProperty.description,
+						date: reminderProperty.date
+					}
+				})
 			}
-			console.log(reminders);
-		});
-
-	res.render('landing-page', {
-		reminder: reminders
-	});
+			res.render('landing-page', {
+				reminder: context.reminders
+			});
+		})
 });
 
 router.post('/login', async (req, res) => {
