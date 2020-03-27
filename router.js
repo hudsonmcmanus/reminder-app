@@ -26,7 +26,7 @@ router.post('/login', async (req, res) => {
 		const isMatch = await bcrypt.compare(password, user.password);
 		if (isMatch) {
 			res.login({ id: user._id });
-			res.redirect('/');
+			res.redirect('landing-page');
 		} else {
 			res.render('login', {
 				error: 'Invalid password'
@@ -37,28 +37,6 @@ router.post('/login', async (req, res) => {
 			error: 'User not found'
 		});
 	}
-});
-
-router.get('/create', (req, res) => {
-	res.render('create');
-});
-
-router.post('/create', grabUser, async (req, res) => {
-	const {title, description} = req.body;
-	const {user} = req;
-	const reminder = new Reminder({
-		name: 'Get Groceries',
-		author: user._id,
-		sharedWith: [],
-		description: 'I need to buy stuff',
-		tags: ['food', 'essentials'],
-		subtasks: ['Get eggs', 'Get milk', 'Spend money'],
-		// 1 day from now
-		date: new Date(Date.now() + 1000 * 60 * 60 * 24)
-	});
-	console.log(reminder)
-	await reminder.save();
-	res.redirect('/');
 });
 
 router.get('/register', (req, res) => {
@@ -186,6 +164,46 @@ router.get('/add-mock-reminder', async (req, res) => {
 	await reminder.save();
 
 	res.json(reminder);
+});
+
+router.get('/landing-page', (req, res) => {
+	Reminder.find({})
+		.then(reminder => {
+			const context = {
+				reminders: reminder.map(reminderProperty =>  {
+					return {
+						name: reminderProperty.name,
+						description: reminderProperty.description,
+						date: reminderProperty.date
+					}
+				})
+			}
+			res.render('landing-page', {
+				reminder: context.reminders
+			});
+		})
+});
+
+router.get('/create', (req,res) => {
+	res.render('create');
+});
+
+router.post('/create', grabUser, async (req, res) => {
+	let {name, description, date, time} = req.body;
+	const {user} = req;
+
+	let reminder = new Reminder ({
+		name: name,
+		author: user._id,
+		sharedWith: [],
+		description: description,
+		tags: [],
+		subtasks: [],
+		date: date
+	});
+
+	await reminder.save();
+	res.redirect('landing-page');
 });
 
 // Serve files in the static folder
