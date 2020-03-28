@@ -47,10 +47,10 @@ router.post('/create', grabUser, async (req, res) => {
 	const {title, description} = req.body;
 	const {user} = req;
 	const reminder = new Reminder({
-		name: 'Get Groceries',
+		name: title,
 		author: user._id,
 		sharedWith: [],
-		description: 'I need to buy stuff',
+		description: description,
 		tags: ['food', 'essentials'],
 		subtasks: ['Get eggs', 'Get milk', 'Spend money'],
 		// 1 day from now
