@@ -23,7 +23,12 @@ const reminderSchema = new Schema(
 		],
 		description: String,
 		tags: [String],
-		subtasks: [String],
+		subtasks: [
+			{
+				completed: Boolean,
+				description: String
+			}
+		],
 		date: {
 			type: Date,
 			required: true

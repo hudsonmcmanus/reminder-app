@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/96a80af5db.js" crossorigin="anonymous"></script>
+    <title>sub task</title>
+</head>
+<body>
+    <div id="subTasks">
+        <form action="" class="add">
+            <input type="text" name="add" value="Add Tasks" />
+        </form>
+
+        <ul class="todos"></ul>
+    </div>
+
+    
+
+    <script>
+        const addForm = document.querySelector('.add');
+        const list = document.querySelector('.todos');
+
+        const generateTemplate = function(todo) {
+            const html = `
+            <li>
+                <span>${todo}</span>
+                <i class="far fa-trash-alt delete"></i>
+            </li>`;
+
+            list.innerHTML += html;
+        };
+
+        addForm.addEventListener('submit', function(e){
+            e.preventDefault();
+            const todo = addForm.add.value.trim();
+
+            if(todo.length){
+                generateTemplate(todo);
+                addForm.reset();
+            }
+        });
+
+        list.addEventListener('click', function(e){
+            if(e.target.classList.contains('delete')){
+                e.target.parentElement.remove();
+            }
+        });
+
+
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tags</title>
+    <style>
+        .container{
+            display: flex;
+        }
+
+        .tag-container {
+        border: 2px solid #ccc;
+        border-radius: 3px;
+        display: flex;
+        padding: 5px;
+        }
+
+        .tag-container .tag {
+        display: flex;
+        align-items: center;
+        color: #333;
+        border: 1px solid #ccc;
+        padding: 5px;
+        }
+
+        .tag i {
+        font-size: 16px;
+        color: #666;
+        margin-left: 5px;
+        font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .tag-container input {
+        padding: 5px;
+        font-size: 16px;
+        border: 1px dotted #ccc;
+        outline: none;
+        color: #333;
+        font-family: Arial, Helvetica, sans-serif;
+        flex: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <br />
+        <br />
+        <div class="tag-container">
+          <input  />  
+        </div>
+        
+      </div>
+    
+    
+    <script>
+        let tagContainer = document.querySelector('.tag-container');
+        let input = document.querySelector('.tag-container input');
+
+        let tags = [];
+
+        // create a tag
+        function createTag(label) {
+        let div = document.createElement('div');
+        div.setAttribute('class', 'tag');
+
+        let span = document.createElement('span');
+        span.innerHTML = label;
+
+        let closeIcon = document.createElement('i');
+        closeIcon.innerHTML = 'x';
+
+        closeIcon.setAttribute('class', 'material-icons');
+        closeIcon.setAttribute('data-item', label);
+        div.appendChild(span);
+        div.appendChild(closeIcon);
+
+        return div;
+        }
+
+        // clear the previous tag when new tag
+        function reset(){
+            document.querySelectorAll('.tag').forEach(function(tag){
+                tag.parentElement.removeChild(tag);
+            })
+        }
+
+        // add tag to the tag container
+        function addTags() {
+        reset()
+        tags.slice().reverse().forEach(tag => {
+            tagContainer.prepend(createTag(tag));
+        });
+        }
+
+
+        // create a tag after Enter is pressed
+        input.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                tags.push(input.value);
+                addTags();
+                input.value = '';
+            }
+        });
+
+        // delete a tag when press the 'x'
+        document.addEventListener('click', function(e){
+            if (e.target.tagName === 'I') {
+                let tagLabel = e.target.getAttribute('data-item');
+                let index = tags.indexOf(tagLabel);
+                tags = [...tags.slice(0, index), ...tags.slice(index+1)];
+                addTags();    
+            } 
+        })
+
+
+
+        
+
+
+    </script>
+</body>
+</html> 
