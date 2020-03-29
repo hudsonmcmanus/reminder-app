@@ -34,6 +34,13 @@
                     <div class="form-group">
                         <input type="text" class="form-control" name="description" placeholder="Description">
                     </div>
+                    <ul class='list-group' id="subtaskList">
+
+                    </ul>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="subtasks" placeholder="New Subtask" id="newSubtask">
+                        <button type="button" onclick="addSubtask()">Add</button>
+                    </div>
                     <div class="form-check">
                         <label for="date">Remind Me On a Day</label>
                         <input type="date" class="form-control" name="date" placeholder="Password">
@@ -52,3 +59,44 @@
         </div>
         </div>
     </div>
+
+    <script>
+        let subtaskArray = [];
+        
+        function addSubtask(){
+            let description = document.getElementById("newSubtask").value;
+            let newSubtask = {completed: false, description: description};
+            subtaskArray.push(newSubtask);
+            subtaskDisplay(description); 
+            document.getElementById("newSubtask").value = "";
+        }
+
+        function subtaskDisplay(description) {
+            let subtaskList = document.getElementById("subtaskList");
+            let li = document.createElement("li");
+            li.setAttribute("class", "list-group-item");
+            
+            let checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.name = "completed";
+            li.appendChild(checkbox);          
+
+            li.appendChild(document.createTextNode(description));
+
+            let deleteBtn = document.createElement("button");
+            deleteBtn.type = "button";
+            deleteBtn.setAttribute("class", "btn btn-secondary float-right");
+            deleteBtn.onclick = function() {
+                subtaskList.removeChild(li);
+                // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find
+                subtaskArray.splice(subtaskArray.indexOf())
+            }
+            deleteBtn.innerHTML = "delete";
+            li.appendChild(deleteBtn);
+
+            subtaskList.appendChild(li);
+        }
+
+    </script>
+</body>
+</html>

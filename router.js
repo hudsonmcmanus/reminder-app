@@ -11,7 +11,7 @@ router.get('/', grabUser, (req, res) => {
 	res.render('home', {
 		user
 	});
-});
+}); 
 
 router.get('/login', (req, res) => {
 	res.render('login');
@@ -201,6 +201,10 @@ router.post('/create', grabUser, async (req, res) => {
 		subtasks: [],
 		date: date
 	});
+
+	// for (let i = 0; i < subtasks_array.length; i++){
+	// 	reminder.subtasks.push(subtasks_array[i]);
+	// }
 
 	await reminder.save();
 	res.redirect('landing-page');
