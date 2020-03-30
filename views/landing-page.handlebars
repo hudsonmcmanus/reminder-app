@@ -29,7 +29,16 @@
 		// on checkbox, get associated user and add to array
 		// on share button, send list of users and reminder as post
 		// in server, receive post and for each user, add the reminder to that user
-		// redirect to /landing page		
+		// redirect to /landing page
+		function showSelected() {
+			let checkboxes = document.getElementsByClassName("shareWith");
+			for (let i = 0; i < checkboxes.length; i++) {
+				if (checkboxes[i].checked == true){
+					console.log(checkboxes[i].parentNode.innerText);
+				}
+			}		
+		}
+		
 	</script>
 </body>
 

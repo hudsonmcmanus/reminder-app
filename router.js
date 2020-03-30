@@ -169,10 +169,14 @@ router.get('/add-mock-reminder', async (req, res) => {
 router.get('/landing-page', grabUser, async (req, res) => {
 	const {user} = req;
 
+	let friendsList = user.friends;
 	let friends;
 
 	// Finding all users right now - need to find only friends!
-	User.find().lean().exec(function(err, docs){
+	User.find({
+		_id: friendsList,
+		// _id: friendsList[2],
+	}).lean().exec(function(err, docs){
 		if (err){
 			console.log(err);
 			return;

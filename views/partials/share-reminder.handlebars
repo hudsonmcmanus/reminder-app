@@ -8,17 +8,27 @@
         </button>
       </div>
       <div class="modal-body">
-        <ul class='list-group'>
-          {{#each friends}}
-            <li class='list-group-item'>
-              {{username}}
-              <input class="float-right" type="checkbox">
-            </li>
-          {{/each}}
-        </ul>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm">
+            </div>
+            <div class="col-sm-8">
+              <ul class='list-group'>
+                {{#each friends}}
+                  <li class='list-group-item'>
+                    {{username}}
+                    <input class="shareWith float-right" type="checkbox" style="width: 16px; height: 16px;">
+                  </li>
+                {{/each}}
+              </ul>
+            </div>
+            <div class="col-sm">
+            </div>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Share</button>
+        <button type="button" class="btn btn-primary" onclick="showSelected()">Share</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
