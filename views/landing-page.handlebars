@@ -14,10 +14,59 @@
 
 	{{> reminders}}
 
+	{{> share-reminder}}
+
 	{{> footer}}
 
 	<script src="/jquery-3.3.1.min.js"></script>
 	<script src="/bootstrap/js/bootstrap.min.js"></script>
+
+	<script>
+		let reminderID;
+
+		function shareReminder(share) {
+			$('#shareReminderModal').modal('show');
+			// get the reminder that is selected for sharing
+			reminderID = share.parentNode.getElementsByClassName("reminderID")[0].innerText;
+		}
+
+		// clear the checkboxes when done sharing
+		function clearCheckboxes() {
+			let checkboxes = document.getElementsByClassName("shareWith");
+			for (let i = 0; i < checkboxes.length; i++) {
+				checkboxes[i].checked = false;
+			}
+		}
+
+		let selectedUsers = [];
+		$(document).ready(function(){
+			
+			$('#shareBtn').click(function() {
+				// get all checkbox elements and find the ones that are checked
+				let checkboxes = document.getElementsByClassName("shareWith");
+				for (let i = 0; i < checkboxes.length; i++) {
+					if (checkboxes[i].checked == true){
+						// if checked, push the associated userID to the array
+						selectedUsers.push(checkboxes[i].parentNode.getElementsByClassName("friendID")[0].innerText);
+					}
+				}
+				// send a POST request
+				$.ajax({
+				  type: "POST",
+				  url: "/share-reminder",
+				  data: {
+				  	reminderID: reminderID, 
+				  	selectedUsers: JSON.stringify(selectedUsers),
+				  },				  
+				});	
+
+				// reset the values and hide modal
+				selectedUsers = [];
+				clearCheckboxes();
+				$('#shareReminderModal').modal('hide');	
+			});
+		});		
+	</script>
 </body>
 
 </html>

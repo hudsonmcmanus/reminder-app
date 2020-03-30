@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+const mongoose = require('mongoose');
+
 const bcrypt = require('bcrypt');
 
 const { Reminder, User } = require('./database');
@@ -117,6 +119,26 @@ router.post('/add-friend', grabUser, async (req, res) => {
 	res.redirect('/add-friend');
 });
 
+router.post('/share-reminder', async (req, res) => {
+	// For each user, select the reminder to share and create copies of it with new IDs and authors
+	let selectedUsers = JSON.parse(req.body.selectedUsers);
+	let reminderID = req.body.reminderID;
+
+	for (let i = 0; i < selectedUsers.length; i++){
+		Reminder.findById(reminderID).exec(async function(err, doc) {
+			// create new ID, but use a copy of the document
+			doc._id = mongoose.Types.ObjectId();
+			// set the document as new
+			doc.isNew = true;
+			// change the author to the selected user to share with
+			doc.author = selectedUsers[i];
+			await doc.save();
+		});
+	}
+
+	res.redirect('/landing-page');
+});
+
 // Create some users (temporary)
 router.get('/add-mock-users', async (req, res) => {
 	const count = await User.countDocuments().exec();
@@ -166,14 +188,34 @@ router.get('/add-mock-reminder', async (req, res) => {
 	res.json(reminder);
 });
 
-router.get('/landing-page', (req, res) => {
+router.get('/landing-page', grabUser, async (req, res) => {
+	const {user} = req;
+
+	let friendsList = user.friends;
+	let friends;
+
+	// Finding all users right now - need to find only friends!
+	User.find({
+		_id: friendsList,
+		// _id: friendsList[2],
+	}).lean().exec(function(err, docs){
+		if (err){
+			console.log(err);
+			return;
+		}
+		friends = docs;
+	});
+
 	// use .lean() function to have the result document as plain Javascript objects, not Mongoose Document
 	// https://mongoosejs.com/docs/tutorials/lean.html
-	Reminder.find({})
+	Reminder.find({
+		author: user._id,
+	})
 		.lean().then(reminder => {
 			const context = {
 				reminders: reminder.map(reminderProperty =>  {
 					return {
+						_id: reminderProperty._id,
 						name: reminderProperty.name,
 						description: reminderProperty.description,
 						date: reminderProperty.date,
@@ -182,7 +224,8 @@ router.get('/landing-page', (req, res) => {
 				})
 			}
 			res.render('landing-page', {
-				reminder: context.reminders
+				reminder: context.reminders, 
+				friends: friends,
 			});
 		})
 });
