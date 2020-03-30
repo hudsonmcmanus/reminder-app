@@ -35,7 +35,6 @@
                         <input type="text" class="form-control" name="description" placeholder="Description">
                     </div>
                     <ul class='list-group' id="subtaskList">
-
                     </ul>
                     <input type="hidden" id="subtaskHidden" name="subtaskHidden">
                     <div class="form-group">
@@ -77,47 +76,46 @@
                     return false;
                 }
             });
-
-            // $("#reminderForm").submit(function(e){
-            //     let subtasksJson = JSON.stringify(subtaskArray);
-            //     // console.log(subtasksJson);
-            //     let input = $(this).serialize();
-            //     console.log("Input:", input)
-            //     $.ajax({
-            //         url: '/create',
-            //         type: "POST",
-            //         data: subtasksJson,
-            //     });
-            // });
-
         });
 
         let subtaskHidden = document.getElementById("subtaskHidden");
         
+        // upon clicking add subtask button...
         function addSubtask(){
             let description = document.getElementById("newSubtask").value;
             let newSubtask = {completed: false, description: description};
+            
+            // add it to the array of subtask objects
             subtaskArray.push(newSubtask);
+
+            // display it as a list on the html page
             subtaskDisplay(description); 
+
+            // save it to the hidden input that will be eventually sent to router.js as a json string
             subtaskHidden.value = JSON.stringify(subtaskArray);
+
+            // clearing out the previous input
             document.getElementById("newSubtask").value = "";
         }
 
+        // display the list of subtasks that have been entered
         function subtaskDisplay(description) {
+            // get the ul element
             let subtaskList = document.getElementById("subtaskList");
-            let li = document.createElement("li");
-            li.setAttribute("class", "list-group-item");
             
-            let checkbox = document.createElement("input");
-            checkbox.type = "checkbox";
-            checkbox.name = "completed";
-            li.appendChild(checkbox);          
+            // create an li element
+            let li = document.createElement("li");
+            li.setAttribute("class", "list-group-item");       
 
+            // add the description text to the li element
             li.appendChild(document.createTextNode(description));
 
+            // append a delete button to the right side
             let deleteBtn = document.createElement("button");
             deleteBtn.type = "button";
             deleteBtn.setAttribute("class", "btn btn-secondary float-right");
+            
+            // when delete is clicked, remove from the html li, the subtaskArray, and also the subtaskHidden input
             deleteBtn.onclick = function() {
                 subtaskList.removeChild(li);
                 subtaskArray = subtaskArray.filter(function( obj ) {

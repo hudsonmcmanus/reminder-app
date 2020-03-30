@@ -195,6 +195,7 @@ router.post('/create', grabUser, async (req, res) => {
 	let {name, description, date, time} = req.body;
 	const {user} = req;
 
+	// array is passed as JSON, so must parse back into object
 	let subtasks_array = JSON.parse(req.body.subtaskHidden);
 
 	let reminder = new Reminder ({
@@ -207,6 +208,7 @@ router.post('/create', grabUser, async (req, res) => {
 		date: date
 	});
 
+	// loop through entire array of objects and push each one into subtasks
 	for (let i = 0; i < subtasks_array.length; i++){
 		reminder.subtasks.push(subtasks_array[i]);
 	}
