@@ -14,10 +14,23 @@
 
 	{{> reminders}}
 
+	{{> share-reminder}}
+
 	{{> footer}}
 
 	<script src="/jquery-3.3.1.min.js"></script>
 	<script src="/bootstrap/js/bootstrap.min.js"></script>
+
+	<script>
+		function shareReminder() {
+			$('#shareReminderModal').modal('show');
+		}
+
+		// on checkbox, get associated user and add to array
+		// on share button, send list of users and reminder as post
+		// in server, receive post and for each user, add the reminder to that user
+		// redirect to /landing page		
+	</script>
 </body>
 
 </html>

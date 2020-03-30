@@ -167,6 +167,17 @@ router.get('/add-mock-reminder', async (req, res) => {
 });
 
 router.get('/landing-page', (req, res) => {
+	let friends;
+
+	// Finding all users right now - need to find only friends!
+	User.find().lean().exec(function(err, docs){
+		if (err){
+			console.log(err);
+			return;
+		}
+		friends = docs;
+	});
+
 	// use .lean() function to have the result document as plain Javascript objects, not Mongoose Document
 	// https://mongoosejs.com/docs/tutorials/lean.html
 	Reminder.find({})
@@ -182,7 +193,8 @@ router.get('/landing-page', (req, res) => {
 				})
 			}
 			res.render('landing-page', {
-				reminder: context.reminders
+				reminder: context.reminders, 
+				friends: friends,
 			});
 		})
 });
