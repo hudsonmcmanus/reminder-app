@@ -117,6 +117,14 @@ router.post('/add-friend', grabUser, async (req, res) => {
 	res.redirect('/add-friend');
 });
 
+router.post('/share-reminder', (req, res) => {
+	console.log(req.body.reminderID);
+	console.log(JSON.parse(req.body.selectedUsers));
+
+	// in server, receive post and for each user, add the reminder to that user
+	// redirect to /landing page
+});
+
 // Create some users (temporary)
 router.get('/add-mock-users', async (req, res) => {
 	const count = await User.countDocuments().exec();
@@ -193,6 +201,7 @@ router.get('/landing-page', grabUser, async (req, res) => {
 			const context = {
 				reminders: reminder.map(reminderProperty =>  {
 					return {
+						_id: reminderProperty._id,
 						name: reminderProperty.name,
 						description: reminderProperty.description,
 						date: reminderProperty.date,

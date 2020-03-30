@@ -22,23 +22,35 @@
 	<script src="/bootstrap/js/bootstrap.min.js"></script>
 
 	<script>
-		function shareReminder() {
+		let reminderID;
+
+		function shareReminder(share) {
 			$('#shareReminderModal').modal('show');
+			reminderID = share.parentNode.getElementsByClassName("reminderID")[0].innerText;
 		}
 
-		// on checkbox, get associated user and add to array
-		// on share button, send list of users and reminder as post
-		// in server, receive post and for each user, add the reminder to that user
-		// redirect to /landing page
-		function showSelected() {
-			let checkboxes = document.getElementsByClassName("shareWith");
-			for (let i = 0; i < checkboxes.length; i++) {
-				if (checkboxes[i].checked == true){
-					console.log(checkboxes[i].parentNode.innerText);
+		let selectedUsers = [];
+		$(document).ready(function(){
+			$('#shareBtn').click(function() {
+				let checkboxes = document.getElementsByClassName("shareWith");
+				for (let i = 0; i < checkboxes.length; i++) {
+					if (checkboxes[i].checked == true){
+						selectedUsers.push(checkboxes[i].parentNode.getElementsByClassName("friendID")[0].innerText);
+					}
 				}
-			}		
-		}
-		
+
+				console.log(selectedUsers)
+
+				$.ajax({
+				  type: "POST",
+				  url: "/share-reminder",
+				  data: {
+				  	reminderID: reminderID, 
+				  	selectedUsers: JSON.stringify(selectedUsers),
+				  },				  
+				});		
+			});
+		});		
 	</script>
 </body>
 

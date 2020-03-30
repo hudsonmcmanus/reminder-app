@@ -16,6 +16,7 @@
               <ul class='list-group'>
                 {{#each friends}}
                   <li class='list-group-item'>
+                    <p class="friendID" hidden>{{_id}}</p>
                     {{username}}
                     <input class="shareWith float-right" type="checkbox" style="width: 16px; height: 16px;">
                   </li>
@@ -28,7 +29,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="showSelected()">Share</button>
+        <button id="shareBtn" type="button" class="btn btn-primary">Share</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
