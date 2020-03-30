@@ -166,7 +166,9 @@ router.get('/add-mock-reminder', async (req, res) => {
 	res.json(reminder);
 });
 
-router.get('/landing-page', (req, res) => {
+router.get('/landing-page', grabUser, async (req, res) => {
+	const {user} = req;
+
 	let friends;
 
 	// Finding all users right now - need to find only friends!
@@ -180,7 +182,9 @@ router.get('/landing-page', (req, res) => {
 
 	// use .lean() function to have the result document as plain Javascript objects, not Mongoose Document
 	// https://mongoosejs.com/docs/tutorials/lean.html
-	Reminder.find({})
+	Reminder.find({
+		author: user._id,
+	})
 		.lean().then(reminder => {
 			const context = {
 				reminders: reminder.map(reminderProperty =>  {
