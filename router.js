@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+const mongoose = require('mongoose');
+
 const bcrypt = require('bcrypt');
 
 const { Reminder, User } = require('./database');
@@ -117,12 +119,24 @@ router.post('/add-friend', grabUser, async (req, res) => {
 	res.redirect('/add-friend');
 });
 
-router.post('/share-reminder', (req, res) => {
-	console.log(req.body.reminderID);
-	console.log(JSON.parse(req.body.selectedUsers));
+router.post('/share-reminder', async (req, res) => {
+	// For each user, select the reminder to share and create copies of it with new IDs and authors
+	let selectedUsers = JSON.parse(req.body.selectedUsers);
+	let reminderID = req.body.reminderID;
 
-	// in server, receive post and for each user, add the reminder to that user
-	// redirect to /landing page
+	for (let i = 0; i < selectedUsers.length; i++){
+		Reminder.findById(reminderID).exec(async function(err, doc) {
+			// create new ID, but use a copy of the document
+			doc._id = mongoose.Types.ObjectId();
+			// set the document as new
+			doc.isNew = true;
+			// change the author to the selected user to share with
+			doc.author = selectedUsers[i];
+			await doc.save();
+		});
+	}
+
+	res.redirect('/landing-page');
 });
 
 // Create some users (temporary)
