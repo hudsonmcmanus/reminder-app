@@ -25,7 +25,7 @@
                 {{#if error}}
 					<b>{{error}}</b>
 				{{/if}}
-                <form action="/create" method="POST">
+                <form id="reminderForm" action="/create" method="POST">
                     <div class="form-group">
                     <!--Get the title, description and date and time-->
                     <div class="form-group">
@@ -37,6 +37,7 @@
                     <ul class='list-group' id="subtaskList">
 
                     </ul>
+                    <input type="hidden" id="subtaskHidden" name="subtaskHidden">
                     <div class="form-group">
                         <input type="text" class="form-control" name="subtasks" placeholder="New Subtask" id="newSubtask">
                         <button type="button" onclick="addSubtask()">Add</button>
@@ -51,7 +52,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" id="submitForm" class="btn btn-primary">Submit</button>
                     </div>
                     </div>
                 </form>
@@ -60,14 +61,45 @@
         </div>
     </div>
 
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"></script>
     <script>
         let subtaskArray = [];
+
+        $(document).ready(function() {            
+            // disable enter button submitting form for every text input
+            $(document).on("keypress", 'form', function (e) {
+                var code = e.keyCode || e.which;
+                if (code == 13) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+
+            // $("#reminderForm").submit(function(e){
+            //     let subtasksJson = JSON.stringify(subtaskArray);
+            //     // console.log(subtasksJson);
+            //     let input = $(this).serialize();
+            //     console.log("Input:", input)
+            //     $.ajax({
+            //         url: '/create',
+            //         type: "POST",
+            //         data: subtasksJson,
+            //     });
+            // });
+
+        });
+
+        let subtaskHidden = document.getElementById("subtaskHidden");
         
         function addSubtask(){
             let description = document.getElementById("newSubtask").value;
             let newSubtask = {completed: false, description: description};
             subtaskArray.push(newSubtask);
             subtaskDisplay(description); 
+            subtaskHidden.value = JSON.stringify(subtaskArray);
             document.getElementById("newSubtask").value = "";
         }
 
@@ -88,15 +120,16 @@
             deleteBtn.setAttribute("class", "btn btn-secondary float-right");
             deleteBtn.onclick = function() {
                 subtaskList.removeChild(li);
-                // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find
-                subtaskArray.splice(subtaskArray.indexOf())
+                subtaskArray = subtaskArray.filter(function( obj ) {
+                  return obj.description !== description;
+                });
+                subtaskHidden.value = JSON.stringify(subtaskArray);
             }
             deleteBtn.innerHTML = "delete";
             li.appendChild(deleteBtn);
 
             subtaskList.appendChild(li);
         }
-
     </script>
 </body>
 </html>

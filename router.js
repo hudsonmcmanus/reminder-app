@@ -167,14 +167,17 @@ router.get('/add-mock-reminder', async (req, res) => {
 });
 
 router.get('/landing-page', (req, res) => {
+	// use .lean() function to have the result document as plain Javascript objects, not Mongoose Document
+	// https://mongoosejs.com/docs/tutorials/lean.html
 	Reminder.find({})
-		.then(reminder => {
+		.lean().then(reminder => {
 			const context = {
 				reminders: reminder.map(reminderProperty =>  {
 					return {
 						name: reminderProperty.name,
 						description: reminderProperty.description,
-						date: reminderProperty.date
+						date: reminderProperty.date,
+						subtasks: reminderProperty.subtasks,
 					}
 				})
 			}
@@ -192,6 +195,8 @@ router.post('/create', grabUser, async (req, res) => {
 	let {name, description, date, time} = req.body;
 	const {user} = req;
 
+	let subtasks_array = JSON.parse(req.body.subtaskHidden);
+
 	let reminder = new Reminder ({
 		name: name,
 		author: user._id,
@@ -202,9 +207,9 @@ router.post('/create', grabUser, async (req, res) => {
 		date: date
 	});
 
-	// for (let i = 0; i < subtasks_array.length; i++){
-	// 	reminder.subtasks.push(subtasks_array[i]);
-	// }
+	for (let i = 0; i < subtasks_array.length; i++){
+		reminder.subtasks.push(subtasks_array[i]);
+	}
 
 	await reminder.save();
 	res.redirect('landing-page');
