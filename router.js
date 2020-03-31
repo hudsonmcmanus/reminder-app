@@ -69,8 +69,11 @@ router.post('/register', async (req, res) => {
 });
 
 // Social features - find users to add as friends
-router.get('/add-friend', grabUser, (req, res) => {
+router.get('/add-friend', grabUser, (req, res, next) => {
 	const { user } = req;
+	if (!user) {
+		return next();
+	}
 	// use .find() function to search for all users in database
 	// use .lean() function to have the result document as plain Javascript objects, not Mongoose Document
 	// https://mongoosejs.com/docs/tutorials/lean.html
@@ -265,8 +268,8 @@ router.post('/create', grabUser, async (req, res) => {
 	let {name, description, date, time} = req.body;
 	const {user} = req;
 	
-	let dateObj = date + "T" + time;
-	console.log(dateObj)
+	// creating new date object using the input from user
+	let dateObj = new Date(date + "T" + time + ":00")
 
 	let reminder = new Reminder ({
 		name: name,
@@ -275,10 +278,8 @@ router.post('/create', grabUser, async (req, res) => {
 		description: description,
 		tags: [],
 		subtasks: [],
-		date: dateObj
+		date: dateObj,
 	});
-
-	console.log(reminder)
 
 	if (req.body.subtaskHidden) {
 		// array is passed as JSON, so must parse back into object
@@ -295,6 +296,7 @@ router.post('/create', grabUser, async (req, res) => {
 			reminder.tags.push(tags_array[i]);
 		}
 	}	
+	console.log(reminder)
 	// await reminder.save();
 	res.redirect('landing-page');
 });
