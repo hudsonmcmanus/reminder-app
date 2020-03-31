@@ -119,6 +119,7 @@ router.post('/add-friend', grabUser, async (req, res) => {
 	res.redirect('/add-friend');
 });
 
+// Sharing single reminder with one or more friends
 router.post('/share-reminder', async (req, res) => {
 	// For each user, select the reminder to share and create copies of it with new IDs and authors
 	let selectedUsers = JSON.parse(req.body.selectedUsers);
@@ -139,12 +140,16 @@ router.post('/share-reminder', async (req, res) => {
 	res.redirect('/landing-page');
 });
 
+// Sharing multiple reminders with one or more friends
 router.post("/share-multiple-reminders", async (req, res) => {
 	let selectedRemindersMultiple = JSON.parse(req.body.selectedRemindersMultiple);
 	let selectedFriendsMultiple = JSON.parse(req.body.selectedFriendsMultiple);
 
+	// for each reminder
 	for (let i = 0; i < selectedRemindersMultiple.length; i++){
 		let nextReminderID = selectedRemindersMultiple[i];
+
+		// for each friend selected
 		for (let j = 0; j < selectedFriendsMultiple.length; j++){
 			Reminder.findById(nextReminderID).exec(async function(err, doc) {
 				// create new ID, but use a copy of the document

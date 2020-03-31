@@ -50,6 +50,7 @@
 			}
 		}
 
+		// clear all checkboxes for multiple reminder share modal
 		function clearAllCheckboxes() {
 			let reminderCheckboxes = document.getElementsByClassName("reminderSelect");
 			for (let i = 0; i < reminderCheckboxes.length; i++) {
@@ -95,7 +96,7 @@
 				$('#shareReminderModal').modal('hide');	
 			});
 
-
+			// for multiple reminder sharing
 			$('#shareRemindersBtn').click(function() {
 				let reminderCheckboxes = document.getElementsByClassName("reminderSelect");
 				let friendCheckboxes = document.getElementsByClassName("friendSelect");	
@@ -110,7 +111,7 @@
 
 				for (let i = 0; i < friendCheckboxes.length; i++) {
 					if (friendCheckboxes[i].checked == true){
-						// if checked, push the associated reminder ID to the array
+						// if checked, push the associated friend ID to the array
 						selectedFriendsMultiple.push(friendCheckboxes[i].parentNode.getElementsByClassName("friendsID")[0].innerText);
 					}
 				}
