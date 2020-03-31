@@ -296,9 +296,8 @@ router.post('/create', grabUser, async (req, res) => {
 			reminder.tags.push(tags_array[i]);
 		}
 	}	
-	console.log(reminder)
-	// await reminder.save();
-	res.redirect('landing-page');
+	await reminder.save();
+	res.redirect('/landing-page');
 });
 
 // Serve files in the static folder
