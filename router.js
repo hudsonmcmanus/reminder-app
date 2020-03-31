@@ -239,6 +239,9 @@ router.get('/landing-page', grabUser, async (req, res) => {
 	// https://mongoosejs.com/docs/tutorials/lean.html
 	Reminder.find({
 		author: user._id,
+		// Filtering reminders to display only upcoming ones. 
+		// Reminders that are older than the current date are not displayed.
+		date: {$gte: Date.now()},
 	})
 		.lean().then(reminder => {
 			const context = {
