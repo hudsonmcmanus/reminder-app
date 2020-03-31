@@ -139,6 +139,27 @@ router.post('/share-reminder', async (req, res) => {
 	res.redirect('/landing-page');
 });
 
+router.post("/share-multiple-reminders", async (req, res) => {
+	let selectedRemindersMultiple = JSON.parse(req.body.selectedRemindersMultiple);
+	let selectedFriendsMultiple = JSON.parse(req.body.selectedFriendsMultiple);
+
+	for (let i = 0; i < selectedRemindersMultiple.length; i++){
+		let nextReminderID = selectedRemindersMultiple[i];
+		for (let j = 0; j < selectedFriendsMultiple.length; j++){
+			Reminder.findById(nextReminderID).exec(async function(err, doc) {
+				// create new ID, but use a copy of the document
+				doc._id = mongoose.Types.ObjectId();
+				// set the document as new
+				doc.isNew = true;
+				// change the author to the selected user to share with
+				doc.author = selectedFriendsMultiple[j];
+				await doc.save();
+			});
+		}
+	}
+
+});
+
 // Create some users (temporary)
 router.get('/add-mock-users', async (req, res) => {
 	const count = await User.countDocuments().exec();

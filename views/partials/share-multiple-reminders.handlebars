@@ -1,36 +1,46 @@
 <div id="shareMultipleRemindersModal" class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Share My Reminders</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="clearCheckboxes()">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <div class="container">
           <div class="row">
-            <div class="col-sm">
-            </div>
-            <div class="col-sm-8">
+            <div class="col-sm-6">
+              <h5>Reminders:</h5>
               <ul class='list-group'>
-                {{#each friends}}
-                  <li class='list-group-item'>
-                    <p class="friendID" hidden>{{_id}}</p>
-                    {{username}}
-                    <input class="shareWith float-right" type="checkbox" style="width: 16px; height: 16px;">
+                {{#each reminder}}
+                  <li class="overFlow list-group-item">
+                    <p class="reminderID" hidden>{{_id}}</p>
+                    {{name}}
+                    <input class="reminderSelect float-right" type="checkbox" style="width: 16px; height: 16px;">
                   </li>
                 {{/each}}
               </ul>
             </div>
-            <div class="col-sm">
-            </div>
+            <div class="col-sm-6">
+              <h5>Friends:</h5>
+              <ul class='list-group'>
+                {{#each friends}}
+                  <li class='list-group-item'>
+                    <p class="friendsID" hidden>{{_id}}</p>
+                    {{username}}
+                    <input class="friendSelect float-right" type="checkbox" style="width: 16px; height: 16px;">
+                  </li>
+                {{/each}}
+              </ul>
+            </div>            
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button id="shareBtn" type="button" class="btn btn-primary">Share</button>
-        <button type="button" onclick="clearCheckboxes()" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <p id="shareMultipleErrorMessage"></p>
+        <button id="shareRemindersBtn" type="button" class="btn btn-primary">Share</button>
+        <button type="button" onclick="clearAllCheckboxes()" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
