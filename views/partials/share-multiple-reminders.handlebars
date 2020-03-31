@@ -1,0 +1,47 @@
+<div id="shareMultipleRemindersModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Share My Reminders</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="clearAllCheckboxes()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-6">
+              <h5>Reminders:</h5>
+              <ul class='list-group'>
+                {{#each reminder}}
+                  <li class="overFlow list-group-item">
+                    <p class="reminderID" hidden>{{_id}}</p>
+                    {{name}}
+                    <input class="reminderSelect float-right" type="checkbox" style="width: 16px; height: 16px;">
+                  </li>
+                {{/each}}
+              </ul>
+            </div>
+            <div class="col-sm-6">
+              <h5>Friends:</h5>
+              <ul class='list-group'>
+                {{#each friends}}
+                  <li class='list-group-item'>
+                    <p class="friendsID" hidden>{{_id}}</p>
+                    {{username}}
+                    <input class="friendSelect float-right" type="checkbox" style="width: 16px; height: 16px;">
+                  </li>
+                {{/each}}
+              </ul>
+            </div>            
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <p id="shareMultipleErrorMessage"></p>
+        <button id="shareRemindersBtn" type="button" class="btn btn-primary">Share</button>
+        <button type="button" onclick="clearAllCheckboxes()" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

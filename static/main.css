@@ -94,6 +94,17 @@ body {
 	width:100%;
 }
 
+
+.wordWrap {
+	overflow-wrap: break-word;
+}
+
+.overFlow {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 /* STRUCTURE */
 
 .wrapper {
