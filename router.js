@@ -220,6 +220,7 @@ router.get('/landing-page', grabUser, async (req, res) => {
 						description: reminderProperty.description,
 						date: reminderProperty.date,
 						subtasks: reminderProperty.subtasks,
+						tags: reminderProperty.tags,
 					}
 				})
 			}
@@ -240,6 +241,7 @@ router.post('/create', grabUser, async (req, res) => {
 
 	// array is passed as JSON, so must parse back into object
 	let subtasks_array = JSON.parse(req.body.subtaskHidden);
+	let tags_array = JSON.parse(req.body.tagHidden);
 
 	let reminder = new Reminder ({
 		name: name,
@@ -254,6 +256,10 @@ router.post('/create', grabUser, async (req, res) => {
 	// loop through entire array of objects and push each one into subtasks
 	for (let i = 0; i < subtasks_array.length; i++){
 		reminder.subtasks.push(subtasks_array[i]);
+	}
+
+	for (let i = 0; i < tags_array.length; i++){
+		reminder.tags.push(tags_array[i]);
 	}
 
 	await reminder.save();
