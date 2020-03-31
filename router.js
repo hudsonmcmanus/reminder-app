@@ -264,10 +264,9 @@ router.get('/create', (req,res) => {
 router.post('/create', grabUser, async (req, res) => {
 	let {name, description, date, time} = req.body;
 	const {user} = req;
-
-	// array is passed as JSON, so must parse back into object
-	let subtasks_array = JSON.parse(req.body.subtaskHidden);
-	let tags_array = JSON.parse(req.body.tagHidden);
+	
+	let dateObj = date + "T" + time;
+	console.log(dateObj)
 
 	let reminder = new Reminder ({
 		name: name,
@@ -276,19 +275,27 @@ router.post('/create', grabUser, async (req, res) => {
 		description: description,
 		tags: [],
 		subtasks: [],
-		date: date
+		date: dateObj
 	});
 
-	// loop through entire array of objects and push each one into subtasks
-	for (let i = 0; i < subtasks_array.length; i++){
-		reminder.subtasks.push(subtasks_array[i]);
-	}
+	console.log(reminder)
 
-	for (let i = 0; i < tags_array.length; i++){
-		reminder.tags.push(tags_array[i]);
-	}
+	if (req.body.subtaskHidden) {
+		// array is passed as JSON, so must parse back into object
+		let subtasks_array = JSON.parse(req.body.subtaskHidden);
 
-	await reminder.save();
+		// loop through entire array of objects and push each one into subtasks
+		for (let i = 0; i < subtasks_array.length; i++){
+			reminder.subtasks.push(subtasks_array[i]);
+		}
+	}
+	if (req.body.tagHidden) {
+		let tags_array = JSON.parse(req.body.tagHidden);
+		for (let i = 0; i < tags_array.length; i++){
+			reminder.tags.push(tags_array[i]);
+		}
+	}	
+	// await reminder.save();
 	res.redirect('landing-page');
 });
 
