@@ -53,11 +53,11 @@
 
                     <div class="form-check">
                         <label for="date">Remind Me On a Day</label>
-                        <input type="date" class="form-control" name="date" placeholder="Password">
+                        <input id="datePicker" type="date" class="form-control" name="date">
                     </div>
                     <div class="form-check">
                         <label for="time">Remind Me At a Time</label>
-                        <input type="time" class="form-control" name="time" placeholder="Password">
+                        <input id="timePicker" type="time" class="form-control" name="time">
                     </div>
                     <div class="modal-footer">
 
@@ -94,6 +94,15 @@
         });
 
         let subtaskHidden = document.getElementById("subtaskHidden");
+            
+        let today = new Date();
+        let time = today.getHours() + ":" + today.getMinutes();
+        
+        // setting the default date to be the current date
+        document.getElementById('datePicker').valueAsDate = today;
+        
+        // setting the default time to be the current time
+        document.getElementById("timePicker").defaultValue = time;
         
         // upon clicking add subtask button...
         function addSubtask(){

@@ -69,8 +69,11 @@ router.post('/register', async (req, res) => {
 });
 
 // Social features - find users to add as friends
-router.get('/add-friend', grabUser, (req, res) => {
+router.get('/add-friend', grabUser, (req, res, next) => {
 	const { user } = req;
+	if (!user) {
+		return next();
+	}
 	// use .find() function to search for all users in database
 	// use .lean() function to have the result document as plain Javascript objects, not Mongoose Document
 	// https://mongoosejs.com/docs/tutorials/lean.html
@@ -264,10 +267,9 @@ router.get('/create', (req,res) => {
 router.post('/create', grabUser, async (req, res) => {
 	let {name, description, date, time} = req.body;
 	const {user} = req;
-
-	// array is passed as JSON, so must parse back into object
-	let subtasks_array = JSON.parse(req.body.subtaskHidden);
-	let tags_array = JSON.parse(req.body.tagHidden);
+	
+	// creating new date object using the input from user
+	let dateObj = new Date(date + "T" + time + ":00")
 
 	let reminder = new Reminder ({
 		name: name,
@@ -276,19 +278,26 @@ router.post('/create', grabUser, async (req, res) => {
 		description: description,
 		tags: [],
 		subtasks: [],
-		date: date
+		date: dateObj,
 	});
 
-	// loop through entire array of objects and push each one into subtasks
-	for (let i = 0; i < subtasks_array.length; i++){
-		reminder.subtasks.push(subtasks_array[i]);
-	}
+	if (req.body.subtaskHidden) {
+		// array is passed as JSON, so must parse back into object
+		let subtasks_array = JSON.parse(req.body.subtaskHidden);
 
-	for (let i = 0; i < tags_array.length; i++){
-		reminder.tags.push(tags_array[i]);
+		// loop through entire array of objects and push each one into subtasks
+		for (let i = 0; i < subtasks_array.length; i++){
+			reminder.subtasks.push(subtasks_array[i]);
+		}
 	}
-
-	await reminder.save();
+	if (req.body.tagHidden) {
+		let tags_array = JSON.parse(req.body.tagHidden);
+		for (let i = 0; i < tags_array.length; i++){
+			reminder.tags.push(tags_array[i]);
+		}
+	}	
+	console.log(reminder)
+	// await reminder.save();
 	res.redirect('landing-page');
 });
 
