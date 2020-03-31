@@ -303,6 +303,18 @@ router.post('/create', grabUser, async (req, res) => {
 	res.redirect('/landing-page');
 });
 
+// router.put => edit the reminder
+
+router.delete('/delete-reminder/:_id', function (req, res) {
+    let reminderID = req.body.reminderID;
+
+    Reminder.findByIdAndRemove(reminderID, function(err) {
+        if(err) {
+			console.log(err);
+		}
+    });
+});
+
 // Serve files in the static folder
 router.use(express.static('static'));
 
