@@ -4,18 +4,23 @@
     </div>
     {{#each reminder}}
     <div class="card">
+
         <div class="card-body fadeIn">
+
             <p id="reminderId" class="reminderID" hidden>{{_id}}</p>
             <h5 class="card-title">{{name}}</h5> <!--Reminder Name-->
             <h6 class="card-subtitle mb-2 text-muted">{{date}}</h6> <!--Date/Time-->
             <p class="card-text">{{description}}</p> <!--Description-->
+
             <ul class="fadeIn">
                 {{#each subtasks}}
                     <li>{{description}}</li>
                 {{/each}}
             </ul>
             <a href="#" class="card-link">Edit</a>
-            <a href="#" class="card-link">Delete</a>
+            <a data-target="#deleteReminderModal" data-toggle="modal" href="#deleteReminderModal" id="deleteReminderLink" class="card-link">Delete</a>
+            <!-- using a tag without href to follow existing implementation  -->
+            <a class="card-link" href="javascript:void(0);" onclick="shareReminder(this)">Share</a>
         </div>
     </div>
     {{/each}}
