@@ -41,6 +41,16 @@
                         <input type="text" class="form-control" name="subtasks" placeholder="New Subtask" id="newSubtask">
                         <button type="button" onclick="addSubtask()">Add</button>
                     </div>
+
+                    <div class='list-group' id="tagList">
+                    </div>
+                    <input type="hidden" id="tagHidden" name="tagHidden">
+                    <div class="form-group" id="tag-container">
+                        <input type="text" class="form-control" name="tags" placeholder="New Tag" id="newTag">
+                         <button type="button" onclick="addTag()">Add</button>
+                    </div>
+
+
                     <div class="form-check">
                         <label for="date">Remind Me On a Day</label>
                         <input type="date" class="form-control" name="date" placeholder="Password">
@@ -133,6 +143,63 @@
 
             subtaskList.appendChild(li);
         }
+
+        // ++++++++++++++++++++++++++++++++ tag  ++++++++++++++++++++++++++++
+        let tagArray = [];
+        // upon clicking add subtask button...
+        function addTag(){
+            let description = document.getElementById("newTag").value;
+            let newTag = {completed: false, description: description};
+            
+            // add it to the array of subtask objects
+            tagArray.push(newTag);
+            console.log(tagArray);
+
+            // display it as a list on the html page
+            tagDisplay(description); 
+
+            // save it to the hidden input that will be eventually sent to router.js as a json string
+            tagHidden.value = JSON.stringify(tagArray);
+
+            // clearing out the previous input
+            document.getElementById("newTag").value = "";
+        }
+
+        // display the list of subtasks that have been entered
+        function tagDisplay(description) {
+            // get the ul element
+            let tagList = document.getElementById("tagList");
+            
+            let li = document.createElement("div");
+            li.setAttribute("class", "tag");
+
+            let span = document.createElement('span')  ;     
+
+            // add the description text to the li element
+            span.appendChild(document.createTextNode(description));
+            li.appendChild(span);
+
+            // append a delete button to the right side
+            let deleteBtn = document.createElement("i");
+             deleteBtn.innerHTML = "[x]";
+             deleteBtn.setAttribute("class", "'material-icons'");
+            
+            // when delete is clicked, remove from the html li, the subtaskArray, and also the subtaskHidden input
+            deleteBtn.onclick = function() {
+                tagList.removeChild(li);
+                tagArray = tagArray.filter(function( obj ) {
+                  return obj.description !== description;
+                });
+                tagHidden.value = JSON.stringify(tagArray);
+            }
+           
+            li.appendChild(deleteBtn);
+
+            tagList.appendChild(li);
+        }
+        
+
+
     </script>
 </body>
 </html>
