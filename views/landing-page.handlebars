@@ -16,6 +16,8 @@
 
 	{{> share-reminder}}
 
+	{{> share-multiple-reminders}}
+
 	{{> footer}}
 
 	<script src="/jquery-3.3.1.min.js"></script>
@@ -23,11 +25,19 @@
 
 	<script>
 		let reminderID;
+		let reminderName;
 
 		function shareReminder(share) {
-			$('#shareReminderModal').modal('show');
 			// get the reminder that is selected for sharing
 			reminderID = share.parentNode.getElementsByClassName("reminderID")[0].innerText;
+			reminderName = share.parentNode.getElementsByClassName("card-title")[0].innerText;
+			let shareReminderTitle = document.getElementById("shareReminderTitle");
+			shareReminderTitle.innerHTML = "Share Reminder: " + reminderName
+			$('#shareReminderModal').modal('show');
+		}
+
+		function shareMultipleReminders() {
+			$('#shareMultipleRemindersModal').modal('show');
 		}
 
 		// clear the checkboxes when done sharing

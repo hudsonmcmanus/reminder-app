@@ -1,6 +1,15 @@
 <div class="container">
     <div class="page-header">
-        <h1>Your Current Reminders: </h1>
+        <div class="container">
+            <div class="row">
+                <div class="col-10">
+                    <h1>Your Current Reminders: </h1>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-primary" style="position:absolute; right:0px;bottom:0px" onclick="shareMultipleReminders()">Share Reminders</button>
+                </div>
+            </div>
+        </div>
     </div>
     {{#each reminder}}
     <div class="card">
