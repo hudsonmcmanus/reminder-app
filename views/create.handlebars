@@ -18,14 +18,14 @@
             <div class="modal-header">
                 <h5 class="modal-title">Create New Reminder</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true" onclick="redirect()">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body fadeIn">
                 {{#if error}}
 					<b>{{error}}</b>
 				{{/if}}
-                <form action="/create" method="POST">
+                <form id="reminderForm" action="/create" method="POST">
                     <div class="form-group">
                     <!--Get the title, description and date and time-->
                     <div class="form-group">
@@ -33,6 +33,13 @@
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" name="description" placeholder="Description">
+                    </div>
+                    <ul class='list-group' id="subtaskList">
+                    </ul>
+                    <input type="hidden" id="subtaskHidden" name="subtaskHidden">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="subtasks" placeholder="New Subtask" id="newSubtask">
+                        <button type="button" onclick="addSubtask()">Add</button>
                     </div>
                     <div class="form-check">
                         <label for="date">Remind Me On a Day</label>
@@ -43,8 +50,8 @@
                         <input type="time" class="form-control" name="time" placeholder="Password">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="redirect()">Close</button>
+                        <button type="submit" id="submitForm" class="btn btn-primary">Submit</button>
                     </div>
                     </div>
                 </form>
@@ -52,3 +59,78 @@
         </div>
         </div>
     </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"></script>
+    <script>
+        function redirect(){
+            location.replace("/landing-page")
+        }
+        let subtaskArray = [];
+
+        $(document).ready(function() {            
+            // disable enter button submitting form for every text input
+            $(document).on("keypress", 'form', function (e) {
+                var code = e.keyCode || e.which;
+                if (code == 13) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        });
+
+        let subtaskHidden = document.getElementById("subtaskHidden");
+        
+        // upon clicking add subtask button...
+        function addSubtask(){
+            let description = document.getElementById("newSubtask").value;
+            let newSubtask = {completed: false, description: description};
+            
+            // add it to the array of subtask objects
+            subtaskArray.push(newSubtask);
+
+            // display it as a list on the html page
+            subtaskDisplay(description); 
+
+            // save it to the hidden input that will be eventually sent to router.js as a json string
+            subtaskHidden.value = JSON.stringify(subtaskArray);
+
+            // clearing out the previous input
+            document.getElementById("newSubtask").value = "";
+        }
+
+        // display the list of subtasks that have been entered
+        function subtaskDisplay(description) {
+            // get the ul element
+            let subtaskList = document.getElementById("subtaskList");
+            
+            // create an li element
+            let li = document.createElement("li");
+            li.setAttribute("class", "list-group-item");       
+
+            // add the description text to the li element
+            li.appendChild(document.createTextNode(description));
+
+            // append a delete button to the right side
+            let deleteBtn = document.createElement("button");
+            deleteBtn.type = "button";
+            deleteBtn.setAttribute("class", "btn btn-secondary float-right");
+            
+            // when delete is clicked, remove from the html li, the subtaskArray, and also the subtaskHidden input
+            deleteBtn.onclick = function() {
+                subtaskList.removeChild(li);
+                subtaskArray = subtaskArray.filter(function( obj ) {
+                  return obj.description !== description;
+                });
+                subtaskHidden.value = JSON.stringify(subtaskArray);
+            }
+            deleteBtn.innerHTML = "delete";
+            li.appendChild(deleteBtn);
+
+            subtaskList.appendChild(li);
+        }
+    </script>
+</body>
+</html>
