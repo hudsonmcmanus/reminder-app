@@ -80,8 +80,6 @@
             location.replace("/landing-page")
         }
 
-        let subtaskArray = [];
-
         $(document).ready(function() {            
             // disable enter button submitting form for every text input
             $(document).on("keypress", 'form', function (e) {
@@ -93,8 +91,8 @@
             });
         });
 
-        let subtaskHidden = document.getElementById("subtaskHidden");
-            
+        let subtaskArray = [];
+        let subtaskHidden = document.getElementById("subtaskHidden");            
         let today = new Date();
         let time = today.getHours() + ":" + today.getMinutes();
         

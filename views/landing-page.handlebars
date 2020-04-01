@@ -16,8 +16,6 @@
 
 	{{> delete-reminder}}
 
-	{{> edit-reminder}}
-
 	{{> share-reminder}}
 
 	{{> share-multiple-reminders}}
@@ -41,11 +39,6 @@
 			let shareReminderTitle = document.getElementById("shareReminderTitle");
 			shareReminderTitle.innerHTML = "Share Reminder: " + reminderName
 			$('#shareReminderModal').modal('show');
-		}
-
-		function editReminder(edit) {
-			reminderID = edit.parentNode.getElementsByClassName("reminderID")[0].innerText;
-			$('#editReminderModal').modal('show');
 		}
 
 		// for single reminder sharing
@@ -77,6 +70,17 @@
 		let selectedRemindersMultiple = [];
 
 		$(document).ready(function(){
+			// $('.editBtn').click(function(){
+			// 	let editReminderID = $(this).parent().find('.reminderID')[0].innerText;
+			// 	$.ajax({
+			// 		type: "POST",
+			// 		url: "/edit",
+			// 		data: {
+			// 			reminderID: editReminderID,
+			// 		},
+			// 	});
+			// });
+
 			// for single reminder sharing
 			$('#shareBtn').click(function() {
 				// get all checkbox elements and find the ones that are checked

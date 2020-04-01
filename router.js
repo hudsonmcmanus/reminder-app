@@ -314,7 +314,7 @@ router.post('/create', grabUser, async (req, res) => {
 			reminder.subtasks.push(subtasks_array[i]);
 		}
 	}
-	
+
 	if (req.body.tagHidden) {
 		let tags_array = JSON.parse(req.body.tagHidden);
 		for (let i = 0; i < tags_array.length; i++) {
@@ -323,6 +323,14 @@ router.post('/create', grabUser, async (req, res) => {
 	}
 	await reminder.save();
 	res.redirect('/landing-page');
+});
+
+router.post("/edit", async (req, res) => {
+	let reminderID = req.body.editReminderID;
+	const reminder = await Reminder.findById(reminderID)
+		.lean()
+		.exec();
+	return res.render('edit', {reminder: reminder})
 });
 
 // router.put => edit the reminder
