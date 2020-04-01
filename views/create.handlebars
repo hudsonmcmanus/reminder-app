@@ -153,16 +153,15 @@
             subtaskList.appendChild(li);
         }
 
-        // ++++++++++++++++++++++++++++++++ tag  ++++++++++++++++++++++++++++
+        
         let tagArray = [];
         // upon clicking add subtask button...
         function addTag(){
             let description = document.getElementById("newTag").value;
-            let newTag = {completed: false, description: description};
+            let newTag = description;
             
             // add it to the array of subtask objects
             tagArray.push(newTag);
-            console.log(tagArray);
 
             // display it as a list on the html page
             tagDisplay(description); 
