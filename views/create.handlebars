@@ -53,8 +53,9 @@
 
                     <div class="form-check">
                         <label for="date">Remind Me On a Day</label>
-                        <input id="datePicker" type="date" class="form-control" name="date">
+                        <input id="datePicker" type="date" class="form-control" name="date" onchange="dateChange()">
                     </div>
+                    <button type="button" id= 'weatherBtn'>Bring an umbrella</button>
                     <div class="form-check">
                         <label for="time">Remind Me At a Time</label>
                         <input id="timePicker" type="time" class="form-control" name="time">
@@ -153,7 +154,7 @@
             subtaskList.appendChild(li);
         }
 
-        // ++++++++++++++++++++++++++++++++ tag  ++++++++++++++++++++++++++++
+        // ++++++++++++++++++++++++++++++++ tag  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         let tagArray = [];
         // upon clicking add subtask button...
         function addTag(){
@@ -206,7 +207,78 @@
 
             tagList.appendChild(li);
         }
+
+        // ++++++++++++++++++++++++++++++++  Weather  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        //get the userlocation while open the page
+
+       
         
+        // get the date user inputted, this date can change with the input of the user
+
+        function dateChange(){
+            let datePicked = document.getElementById('datePicker').value;
+
+            //convert this date to unix time
+            let strTime = datePicked;
+            let weather_date = new Date(strTime.replace(/-/g, '/'));
+            // convert a date string to unix time
+            let unix_time = Date.parse(weather_date);
+            // format unix time(keep the first 10 number) for Darksky API use 
+            let strUnix = unix_time.toString().slice(0,10);
+            const numUnix = parseInt(strUnix);
+            console.log(numUnix);
+            // console.log(typeof(numUnix));
+
+            // get userlocation
+            navigator.geolocation.getCurrentPosition(function(position){
+                    userLatitude = position.coords.latitude
+                    userLongitude = position.coords.longitude
+                    console.log(userLatitude);
+                    console.log(userLongitude);
+                    forcast(userLatitude,userLongitude,numUnix);
+            })
+            
+
+
+
+        }
+        
+        // covert the time user selected to a unix time
+
+
+        // get the forcast information from darksky API
+        function forcast(latitude, longitude, time){
+            const proxy = 'https://cors-anywhere.herokuapp.com/'
+            const api = proxy+'https://api.darksky.net/forecast/5cdbb6801362ee38b81b258430c5f51c/'+latitude+","+longitude+","+time;
+
+            fetch(api)
+                .then(res =>{
+                    //put result in json object
+                    return res.json();
+                })
+                .then(data =>{
+                    console.log(data);
+                    // [summary]
+                    // day 0
+                    const day0 = data.daily.data[0].icon;
+                    console.log(day0);
+                    
+                    // if it rains -> change the color of the button and disable it
+                    if (day0 == 'rain'){
+                        document.getElementById("weatherBtn").style.background='#ffd500';
+                    }else{
+                        document.getElementById("weatherBtn").style.background='#A9A9A9';
+                    }
+                
+                })
+        }
+
+
+
+
+
+       
+
 
 
     </script>
