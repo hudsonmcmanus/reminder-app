@@ -71,9 +71,12 @@ router.post('/register', async (req, res) => {
 // Social features - find users to add as friends
 router.get('/add-friend', grabUser, (req, res, next) => {
 	const { user } = req;
+	
+	// Checking if the user has logged in, if not, do not display page
 	if (!user) {
 		return next();
 	}
+	
 	// use .find() function to search for all users in database
 	// use .lean() function to have the result document as plain Javascript objects, not Mongoose Document
 	// https://mongoosejs.com/docs/tutorials/lean.html
@@ -219,6 +222,11 @@ router.get('/add-mock-reminder', async (req, res) => {
 
 router.get('/landing-page', grabUser, async (req, res) => {
 	const {user} = req;
+
+	// Checking if the user has logged in, if not, do not display page
+	if (!user) {
+		return next();
+	}
 
 	let friendsList = user.friends;
 	let friends;
