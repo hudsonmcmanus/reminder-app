@@ -142,6 +142,29 @@
 				}
 			});
 		});		
+
+		/**** DELETE REMINDER ****/
+		function deleteReminder(reminder) {
+			reminderID = reminder.parentNode.getElementsByClassName("reminderID")[0].innerText;
+			reminderName = reminder.parentNode.getElementsByClassName("card-title")[0].innerText;
+			$('#deleteReminderModal').modal('show');
+		}
+
+		// When 'yes' is clicked during reminder deletion
+		$(document).ready(function(){
+			$('#deleteBtn').click(function() {
+				$.ajax({
+					method: "DELETE",
+					url: "/delete-reminder/" + reminderID,
+					data: {
+						reminderID: reminderID
+					}
+				}).done(function(res) {
+					window.location.reload(true);
+				});
+				$('#deleteReminderModal').modal('hide');
+			});
+		});
 	</script>
 </body>
 
