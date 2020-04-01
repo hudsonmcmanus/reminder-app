@@ -55,7 +55,7 @@
                         <label for="date">Remind Me On a Day</label>
                         <input id="datePicker" type="date" class="form-control" name="date" onchange="dateChange()">
                     </div>
-                    <button type="button" id= 'weatherBtn'>Bring an umbrella</button>
+                    <button type="button" id= 'weatherBtn' style="margin:2px 20px 2px; border-radius: 12px;" >🌂Bring an umbrella</button>
                     <div class="form-check">
                         <label for="time">Remind Me At a Time</label>
                         <input id="timePicker" type="time" class="form-control" name="time">
@@ -223,11 +223,10 @@
             let weather_date = new Date(strTime.replace(/-/g, '/'));
             // convert a date string to unix time
             let unix_time = Date.parse(weather_date);
-            // format unix time(keep the first 10 number) for Darksky API use 
+            // format unix time from ms to second for Darksky API use 
             let strUnix = unix_time.toString().slice(0,10);
             const numUnix = parseInt(strUnix);
             console.log(numUnix);
-            // console.log(typeof(numUnix));
 
             // get userlocation
             navigator.geolocation.getCurrentPosition(function(position){
@@ -235,15 +234,12 @@
                     userLongitude = position.coords.longitude
                     console.log(userLatitude);
                     console.log(userLongitude);
+                    // get weather forcast on specific day and specific location
                     forcast(userLatitude,userLongitude,numUnix);
             })
             
 
-
-
         }
-        
-        // covert the time user selected to a unix time
 
 
         // get the forcast information from darksky API
@@ -265,9 +261,13 @@
                     
                     // if it rains -> change the color of the button and disable it
                     if (day0 == 'rain'){
+                        // if rain -> button lighten
                         document.getElementById("weatherBtn").style.background='#ffd500';
+                        document.getElementById("weatherBtn").disabled = false;
+
                     }else{
                         document.getElementById("weatherBtn").style.background='#A9A9A9';
+                        document.getElementById("weatherBtn").disabled = true;
                     }
                 
                 })
