@@ -313,6 +313,10 @@ router.delete('/delete-reminder/:_id', function (req, res) {
 			console.log(err);
 		}
     });
+
+    // https://stackoverflow.com/questions/24750169/expressjs-res-redirect-after-delete-request
+    // https://stackoverflow.com/questions/33214717/why-post-redirects-to-get-and-put-redirects-to-put
+    res.redirect(303, '/landing-page');
 });
 
 // Serve files in the static folder
