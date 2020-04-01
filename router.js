@@ -13,10 +13,15 @@ router.get('/', grabUser, (req, res) => {
 	res.render('home', {
 		user
 	});
-}); 
+});
 
 router.get('/login', (req, res) => {
 	res.render('login');
+});
+
+router.get('/logout', (req, res) => {
+	res.clearCookie('token');
+	res.redirect('/');
 });
 
 router.post('/login', async (req, res) => {
@@ -80,45 +85,49 @@ router.get('/add-friend', grabUser, (req, res, next) => {
 	// use .find() function to search for all users in database
 	// use .lean() function to have the result document as plain Javascript objects, not Mongoose Document
 	// https://mongoosejs.com/docs/tutorials/lean.html
-	User.find().lean().exec(function(err, docs){
-		res.render('user/add-friend', {
-			users: docs,
-			helpers: {
-				// Helper function to check if "Add Friend" button should be displayed
-				buttonCheck: function(userObj) {
-					// If it is the same user, don't display Add Friend Button
-					if (userObj.username == user.username){
-						return false;
-					}
-					// If already a friend, don't display Add Friend Button
-					for (let i = 0; i < user.friends.length; i++){
-						if (JSON.stringify(user.friends[i]) == JSON.stringify(userObj._id)){
+	User.find()
+		.lean()
+		.exec(function(err, docs) {
+			res.render('user/add-friend', {
+				users: docs,
+				helpers: {
+					// Helper function to check if "Add Friend" button should be displayed
+					buttonCheck: function(userObj) {
+						// If it is the same user, don't display Add Friend Button
+						if (userObj.username == user.username) {
 							return false;
 						}
+						// If already a friend, don't display Add Friend Button
+						for (let i = 0; i < user.friends.length; i++) {
+							if (
+								JSON.stringify(user.friends[i]) == JSON.stringify(userObj._id)
+							) {
+								return false;
+							}
+						}
+						// Otherwise, display Add Friend Button
+						return true;
 					}
-					// Otherwise, display Add Friend Button
-					return true;
 				}
-			}
+			});
 		});
-	});
 });
 
 // Social features - execute "Add Friend" button function
 router.post('/add-friend', grabUser, async (req, res) => {
 	const { user } = req;
-	
+
 	// Update the friends set within the User object
 	let doc = User.findOneAndUpdate(
-		{"username": user.username},
+		{ username: user.username },
 		// use addToSet method to ensure no duplicates
-		{ "$addToSet": { "friends": req.body.newFriend}},
-		function(err, raw){
-			if (err){
+		{ $addToSet: { friends: req.body.newFriend } },
+		function(err, raw) {
+			if (err) {
 				console.log(err);
 			}
 		}
-	)
+	);
 	// Used to verify that the friends have been added...
 	// doc = await User.findOne({"username": user.username});
 	// console.log(doc.friends);
@@ -131,7 +140,7 @@ router.post('/share-reminder', async (req, res) => {
 	let selectedUsers = JSON.parse(req.body.selectedUsers);
 	let reminderID = req.body.reminderID;
 
-	for (let i = 0; i < selectedUsers.length; i++){
+	for (let i = 0; i < selectedUsers.length; i++) {
 		Reminder.findById(reminderID).exec(async function(err, doc) {
 			// create new ID, but use a copy of the document
 			doc._id = mongoose.Types.ObjectId();
@@ -147,16 +156,18 @@ router.post('/share-reminder', async (req, res) => {
 });
 
 // Sharing multiple reminders with one or more friends
-router.post("/share-multiple-reminders", async (req, res) => {
-	let selectedRemindersMultiple = JSON.parse(req.body.selectedRemindersMultiple);
+router.post('/share-multiple-reminders', async (req, res) => {
+	let selectedRemindersMultiple = JSON.parse(
+		req.body.selectedRemindersMultiple
+	);
 	let selectedFriendsMultiple = JSON.parse(req.body.selectedFriendsMultiple);
 
 	// for each reminder
-	for (let i = 0; i < selectedRemindersMultiple.length; i++){
+	for (let i = 0; i < selectedRemindersMultiple.length; i++) {
 		let nextReminderID = selectedRemindersMultiple[i];
 
 		// for each friend selected
-		for (let j = 0; j < selectedFriendsMultiple.length; j++){
+		for (let j = 0; j < selectedFriendsMultiple.length; j++) {
 			Reminder.findById(nextReminderID).exec(async function(err, doc) {
 				// create new ID, but use a copy of the document
 				doc._id = mongoose.Types.ObjectId();
@@ -168,7 +179,6 @@ router.post("/share-multiple-reminders", async (req, res) => {
 			});
 		}
 	}
-
 });
 
 // Create some users (temporary)
@@ -221,7 +231,7 @@ router.get('/add-mock-reminder', async (req, res) => {
 });
 
 router.get('/landing-page', grabUser, async (req, res) => {
-	const {user} = req;
+	const { user } = req;
 
 	// Checking if the user has logged in, if not, do not display page
 	if (!user) {
@@ -233,63 +243,66 @@ router.get('/landing-page', grabUser, async (req, res) => {
 
 	// Finding all users right now - need to find only friends!
 	User.find({
-		_id: friendsList,
+		_id: friendsList
 		// _id: friendsList[2],
-	}).lean().exec(function(err, docs){
-		if (err){
-			console.log(err);
-			return;
-		}
-		friends = docs;
-	});
+	})
+		.lean()
+		.exec(function(err, docs) {
+			if (err) {
+				console.log(err);
+				return;
+			}
+			friends = docs;
+		});
 
 	// use .lean() function to have the result document as plain Javascript objects, not Mongoose Document
 	// https://mongoosejs.com/docs/tutorials/lean.html
 	Reminder.find({
 		author: user._id,
-		// Filtering reminders to display only upcoming ones. 
+		// Filtering reminders to display only upcoming ones.
 		// Reminders that are older than the current date are not displayed.
-		date: {$gte: Date.now()},
+		date: { $gte: Date.now() }
 	})
-		.lean().then(reminder => {
+		.lean()
+		.then(reminder => {
 			const context = {
-				reminders: reminder.map(reminderProperty =>  {
+				reminders: reminder.map(reminderProperty => {
 					return {
 						_id: reminderProperty._id,
 						name: reminderProperty.name,
 						description: reminderProperty.description,
 						date: reminderProperty.date,
 						subtasks: reminderProperty.subtasks,
-						tags: reminderProperty.tags,
-					}
+						tags: reminderProperty.tags
+					};
 				})
-			}
+			};
 			res.render('landing-page', {
-				reminder: context.reminders, 
-				friends: friends,
+				reminder: context.reminders,
+				friends: friends
 			});
-		})
+		});
 });
 
-router.get('/create', (req,res) => {
+router.get('/create', (req, res) => {
 	res.render('create');
 });
 
 router.post('/create', grabUser, async (req, res) => {
-	let {name, description, date, time} = req.body;
-	const {user} = req;
-	
-	// creating new date object using the input from user
-	let dateObj = new Date(date + "T" + time + ":00")
+	let { name, description, date, time } = req.body;
+	const { user } = req;
 
-	let reminder = new Reminder ({
+	// creating new date object using the input from user
+	let dateObj = new Date(date + 'T' + time + ':00');
+
+	let reminder = new Reminder({
 		name: name,
 		author: user._id,
 		sharedWith: [],
 		description: description,
 		tags: [],
 		subtasks: [],
-		date: dateObj,
+		date: dateObj
 	});
 
 	if (req.body.subtaskHidden) {
@@ -297,16 +310,16 @@ router.post('/create', grabUser, async (req, res) => {
 		let subtasks_array = JSON.parse(req.body.subtaskHidden);
 
 		// loop through entire array of objects and push each one into subtasks
-		for (let i = 0; i < subtasks_array.length; i++){
+		for (let i = 0; i < subtasks_array.length; i++) {
 			reminder.subtasks.push(subtasks_array[i]);
 		}
 	}
 	if (req.body.tagHidden) {
 		let tags_array = JSON.parse(req.body.tagHidden);
-		for (let i = 0; i < tags_array.length; i++){
+		for (let i = 0; i < tags_array.length; i++) {
 			reminder.tags.push(tags_array[i]);
 		}
-	}	
+	}
 	await reminder.save();
 	res.redirect('/landing-page');
 });
@@ -314,19 +327,18 @@ router.post('/create', grabUser, async (req, res) => {
 // router.put => edit the reminder
 
 
+router.delete('/delete-reminder/:_id', function(req, res) {
+	let reminderID = req.body.reminderID;
 
-router.delete('/delete-reminder/:_id', function (req, res) {
-    let reminderID = req.body.reminderID;
-
-    Reminder.findByIdAndRemove(reminderID, function(err) {
-        if(err) {
+	Reminder.findByIdAndRemove(reminderID, function(err) {
+		if (err) {
 			console.log(err);
 		}
-    });
+	});
 
-    // https://stackoverflow.com/questions/24750169/expressjs-res-redirect-after-delete-request
-    // https://stackoverflow.com/questions/33214717/why-post-redirects-to-get-and-put-redirects-to-put
-    res.redirect(303, '/landing-page');
+	// https://stackoverflow.com/questions/24750169/expressjs-res-redirect-after-delete-request
+	// https://stackoverflow.com/questions/33214717/why-post-redirects-to-get-and-put-redirects-to-put
+	res.redirect(303, '/landing-page');
 });
 
 // Serve files in the static folder
