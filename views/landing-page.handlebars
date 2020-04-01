@@ -16,6 +16,8 @@
 
 	{{> delete-reminder}}
 
+	{{> edit-reminder}}
+
 	{{> share-reminder}}
 
 	{{> share-multiple-reminders}}
@@ -39,6 +41,11 @@
 			let shareReminderTitle = document.getElementById("shareReminderTitle");
 			shareReminderTitle.innerHTML = "Share Reminder: " + reminderName
 			$('#shareReminderModal').modal('show');
+		}
+
+		function editReminder(edit) {
+			reminderID = edit.parentNode.getElementsByClassName("reminderID")[0].innerText;
+			$('#editReminderModal').modal('show');
 		}
 
 		// for single reminder sharing

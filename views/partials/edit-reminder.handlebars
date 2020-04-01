@@ -1,0 +1,52 @@
+<div id="editReminderModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Reminder</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" onclick="redirect()">&times;</span>
+        </button>        
+      </div>
+      <div class="modal-body fadeIn">
+            <form id="reminderForm" action="/edit" method="PUT">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="name" placeholder="Reminder Title">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="description" placeholder="Description">
+                </div>
+                <ul class='list-group' id="subtaskList">
+                </ul>
+                <input type="hidden" id="subtaskHidden" name="subtaskHidden">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="subtasks" placeholder="New Subtask" id="newSubtask">
+                    <button type="button" onclick="addSubtask()">Add</button>
+                </div>
+
+                <div class='list-group' id="tagList">
+                </div>
+                <input type="hidden" id="tagHidden" name="tagHidden">
+                <div class="form-group" id="tag-container">
+                    <input type="text" class="form-control" name="tags" placeholder="New Tag" id="newTag">
+                     <button type="button" onclick="addTag()">Add</button>
+                </div>
+
+
+                <div class="form-check">
+                    <label for="date">Remind Me On a Day</label>
+                    <input id="datePicker" type="date" class="form-control" name="date">
+                </div>
+                <div class="form-check">
+                    <label for="time">Remind Me At a Time</label>
+                    <input id="timePicker" type="time" class="form-control" name="time">
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="redirect()">Close</button>
+                    <button type="submit" id="submitForm" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+</div>
