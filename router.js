@@ -325,7 +325,7 @@ router.post('/create', grabUser, async (req, res) => {
 });
 
 // router.put => edit the reminder
-
+//https://mongoosejs.com/docs/api.html#model_Model.findOneAndUpdate
 
 router.delete('/delete-reminder/:_id', function(req, res) {
 	let reminderID = req.body.reminderID;
