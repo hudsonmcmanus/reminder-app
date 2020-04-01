@@ -311,6 +311,22 @@ router.post('/create', grabUser, async (req, res) => {
 	res.redirect('/landing-page');
 });
 
+// router.put => edit the reminder
+
+router.delete('/delete-reminder/:_id', function (req, res) {
+    let reminderID = req.body.reminderID;
+
+    Reminder.findByIdAndRemove(reminderID, function(err) {
+        if(err) {
+			console.log(err);
+		}
+    });
+
+    // https://stackoverflow.com/questions/24750169/expressjs-res-redirect-after-delete-request
+    // https://stackoverflow.com/questions/33214717/why-post-redirects-to-get-and-put-redirects-to-put
+    res.redirect(303, '/landing-page');
+});
+
 // Serve files in the static folder
 router.use(express.static('static'));
 
