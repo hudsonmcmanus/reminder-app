@@ -22,12 +22,7 @@ const reminderSchema = new Schema(
 			}
 		],
 		description: String,
-		tags: [
-			{
-				completed: Boolean,
-				description: String
-			}
-		],
+		tags: [String],
 		subtasks: [
 			{
 				completed: Boolean,
@@ -44,7 +39,6 @@ const reminderSchema = new Schema(
 		timestamps: true
 	}
 );
-
 
 const userSchema = new Schema(
 	{

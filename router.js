@@ -332,6 +332,26 @@ router.delete('/delete-reminder/:_id', function(req, res) {
 	res.redirect(303, '/landing-page');
 });
 
+router.get('/export-json', grabUser, async (req, res, next) => {
+	const { user } = req;
+	if (!user) return next();
+
+	const reminders = await Reminder.find(
+		{
+			author: user._id
+		},
+		// Only the necessary fields
+		'_id name sharedWith description tags.completed tags.description subtasks date'
+	)
+		.lean()
+		.exec();
+
+	res.set('Content-Disposition', 'attachment; filename="reminderBackup.json"');
+	res.json({
+		reminders
+	});
+});
+
 // Serve files in the static folder
 router.use(express.static('static'));
 
