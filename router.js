@@ -333,8 +333,29 @@ router.post("/edit", async (req, res) => {
 	return res.render('edit', {reminder: reminder})
 });
 
-// router.put => edit the reminder
-//https://mongoosejs.com/docs/api.html#model_Model.findOneAndUpdate
+router.post("/edit-reminder", async (req, res) => {
+	let { name, description, pickDate, subtaskHiddenEdit, tagHiddenEdit, editReminderID} = req.body;
+	let subtasks_array = JSON.parse(subtaskHiddenEdit);
+	let tags_array = JSON.parse(tagHiddenEdit)
+	// creating new date object using the input from user
+	let dateObj = new Date(pickDate + ':00');
+
+	let reminder = await Reminder.findByIdAndUpdate(
+		editReminderID, 
+		{ 
+			$set: {
+				name: name,
+				description: description,
+				tags: tags_array,
+				subtasks: subtasks_array,
+				date: dateObj, 	
+			}
+		},
+		{new: true},
+	);
+
+	res.redirect('/landing-page');
+});
 
 router.delete('/delete-reminder/:_id', function(req, res) {
 	let reminderID = req.body.reminderID;

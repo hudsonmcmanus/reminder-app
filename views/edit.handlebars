@@ -21,8 +21,9 @@
             </button>        
           </div>
           <div class="modal-body fadeIn">
-                <form action="/edit" method="PUT">
+                <form action="/edit-reminder" method="POST">
                     <div class="form-group">
+                        <input name="editReminderID" type="hidden" value="{{reminder._id}}">
                         <input type="text" class="form-control" name="name" placeholder="Reminder Title" value="{{reminder.name}}">
                     </div>
                     <div class="form-group">
@@ -51,12 +52,10 @@
                     </div>
 
                     <div class="form-check">
-                        <label for="date">Remind Me On a Day</label>
-                        <input id="datePickerEdit" type="date" class="form-control" name="date">
-                    </div>
-                    <div class="form-check">
-                        <label for="time">Remind Me At a Time</label>
-                        <input id="timePickerEdit" type="time" class="form-control" name="time">
+                        <p id="existingDate"hidden>{{reminder.date}}</p>
+                        <label for="pickDate">Remind Me At:</label>
+                        <input class="form-control" type="datetime-local" id="pickDate"
+                               name="pickDate">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -81,6 +80,7 @@
         // get the ul element
         let subtaskList = document.getElementById("subtaskListEdit");
 
+        // Populate the existing subtasks into the array
         let existingSubtasks = subtaskList.getElementsByClassName("existingSubtasks");
         for (let i = 0; i < existingSubtasks.length; i++) {
             let description = existingSubtasks[i].innerText.replace("Delete", "");
@@ -91,6 +91,10 @@
             // save it to the hidden input that will be eventually sent to router.js as a json string
             subtaskHidden.value = JSON.stringify(subtaskArray);            
         }
+
+        let dateObj = new Date(document.getElementById("existingDate").innerHTML);
+
+        document.getElementById("pickDate").value = dateObj.toISOString().substring(0, 10) + "T" + dateObj.getHours() + ":" + dateObj.getMinutes();
         
         $(document).ready(function() {            
             // disable enter button submitting form for every text input
@@ -101,6 +105,7 @@
                     return false;
                 }
             });
+            // handle delete for existing subtasks
             $('.deleteSubtask').click(function() {
                 let description = $(this).parent()[0].innerText.replace("Delete", "");
                 subtaskList.removeChild($(this).parent()[0]);  
