@@ -314,7 +314,6 @@ router.post('/create', grabUser, async (req, res) => {
 			reminder.subtasks.push(subtasks_array[i]);
 		}
 	}
-
 	if (req.body.tagHidden) {
 		let tags_array = JSON.parse(req.body.tagHidden);
 		for (let i = 0; i < tags_array.length; i++) {

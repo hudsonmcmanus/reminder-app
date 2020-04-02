@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <!-- https://fontawesome.bootstrapcheatsheets.com/ -->
 </head>
 <body>
     {{> navbar-landing-page}}
@@ -43,15 +45,21 @@
                         <button type="button" onclick="addSubtask()">Add</button>
                     </div>
 
-                    <div class='list-group' id="tagList">
+                    <div id="tagListEdit">
+                        {{#each reminder.tags}}
+                            <button class="existingTags wordWrap btn btn-secondary" disabled>
+                                {{this}}                                
+                                <i class="fa fa-trash-o deleteTag"></i>
+                            </button>
+                        {{/each}}
                     </div>
                     <input type="hidden" id="tagHiddenEdit" name="tagHiddenEdit">
                     <div class="form-group" id="tag-container">
-                        <input type="text" class="form-control" name="tags" placeholder="New Tag" id="newTag">
+                        <input type="text" class="form-control" name="tags" placeholder="New Tag" id="newTagEdit">
                          <button type="button" onclick="addTag()">Add</button>
                     </div>
 
-                    <div class="form-check">
+                    <div class="form-group">
                         <p id="existingDate"hidden>{{reminder.date}}</p>
                         <label for="pickDate">Remind Me At:</label>
                         <input class="form-control" type="datetime-local" id="pickDate"
@@ -76,9 +84,18 @@
     <script>
         let subtaskArray = [];
         let subtaskHidden = document.getElementById("subtaskHiddenEdit");
+        let tagHidden = document.getElementById("tagHiddenEdit");
+
+        let tagArray = [];
 
         // get the ul element
         let subtaskList = document.getElementById("subtaskListEdit");
+        let tagList = document.getElementById("tagListEdit");
+
+        let dateObj = new Date(document.getElementById("existingDate").innerHTML);
+
+        // Populate existing reminder datetime
+        document.getElementById("pickDate").value = dateObj.toISOString().substring(0, 10) + "T" + dateObj.getHours() + ":" + dateObj.getMinutes();
 
         // Populate the existing subtasks into the array
         let existingSubtasks = subtaskList.getElementsByClassName("existingSubtasks");
@@ -92,9 +109,17 @@
             subtaskHidden.value = JSON.stringify(subtaskArray);            
         }
 
-        let dateObj = new Date(document.getElementById("existingDate").innerHTML);
+        // Populate the existing tag into the array
+        let existingTags = tagList.getElementsByClassName("existingTags");
+        for (let i = 0; i < existingTags.length; i++) {
+            let description = existingTags[i].innerText;
+            let newTag = description;
+            // add it to the array of tag objects
+            tagArray.push(newTag);
 
-        document.getElementById("pickDate").value = dateObj.toISOString().substring(0, 10) + "T" + dateObj.getHours() + ":" + dateObj.getMinutes();
+            // save it to the hidden input that will be eventually sent to router.js as a json string
+            tagHidden.value = JSON.stringify(tagArray);  
+        }
         
         $(document).ready(function() {            
             // disable enter button submitting form for every text input
@@ -115,6 +140,15 @@
                 subtaskHidden.value = JSON.stringify(subtaskArray);
             });
 
+            // handle delete for existing tags
+            $('.deleteTag').click(function() {
+                let description = $(this).parent()[0].innerText;
+                tagList.removeChild($(this).parent()[0]);  
+                tagArray = tagArray.filter(function( elem ) {
+                  return elem !== description;
+                });
+                tagHidden.value = JSON.stringify(tagArray);
+            });
         });
 
         // upon clicking add subtask button...
@@ -161,6 +195,51 @@
             li.appendChild(deleteBtn);
 
             subtaskList.appendChild(li);
+        }
+
+        // upon clicking add subtask button...
+        function addTag(){
+            let description = document.getElementById("newTagEdit").value;
+            let newTag = description;
+            
+            // add it to the array of subtask objects
+            tagArray.push(newTag);
+
+            // display it as a list on the html page
+            tagDisplay(description); 
+
+            // save it to the hidden input that will be eventually sent to router.js as a json string
+            tagHidden.value = JSON.stringify(tagArray);
+
+            // clearing out the previous input
+            document.getElementById("newTagEdit").value = "";
+        }
+
+        // display the list of subtasks that have been entered
+        function tagDisplay(description) {            
+            let btn = document.createElement("button");
+            btn.disabled = true;
+            // btn.setAttribute("class", "tag");
+            btn.setAttribute("class", "btn btn-secondary");
+
+            btn.appendChild(document.createTextNode(description));
+
+            // append a delete button to the right side
+            let deleteBtn = document.createElement("i");
+            deleteBtn.setAttribute("class", "fa fa-trash-o");
+            
+            // when delete is clicked, remove from the html li, the subtaskArray, and also the subtaskHidden input
+            deleteBtn.onclick = function() {
+                tagList.removeChild(btn);
+                tagArray = tagArray.filter(function( elem ) {
+                  return elem !== description;
+                });
+                tagHidden.value = JSON.stringify(tagArray);
+            }
+           
+            btn.appendChild(deleteBtn);
+
+            tagList.appendChild(btn);
         }
     </script>
 </body>

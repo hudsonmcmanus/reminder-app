@@ -7,6 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
 </head>
 
 <body>
@@ -42,7 +43,7 @@
                         <button type="button" onclick="addSubtask()">Add</button>
                     </div>
 
-                    <div class='list-group' id="tagList">
+                    <div id="tagList">
                     </div>
                     <input type="hidden" id="tagHidden" name="tagHidden">
                     <div class="form-group" id="tag-container">
@@ -92,7 +93,8 @@
         });
 
         let subtaskArray = [];
-        let subtaskHidden = document.getElementById("subtaskHidden");            
+        let subtaskHidden = document.getElementById("subtaskHidden"); 
+        let tagHidden = document.getElementById("tagHidden");           
         let today = new Date();
         let time = today.getHours() + ":" + today.getMinutes();
         
@@ -175,32 +177,30 @@
             // get the ul element
             let tagList = document.getElementById("tagList");
             
-            let li = document.createElement("div");
-            li.setAttribute("class", "tag");
+            let btn = document.createElement("button");
+            btn.disabled = true;
+            // btn.setAttribute("class", "tag");
+            btn.setAttribute("class", "btn btn-secondary");
 
-            let span = document.createElement('span')  ;     
-
-            // add the description text to the li element
-            span.appendChild(document.createTextNode(description));
-            li.appendChild(span);
+            btn.appendChild(document.createTextNode(description));
 
             // append a delete button to the right side
             let deleteBtn = document.createElement("i");
-             deleteBtn.innerHTML = "[x]";
-             deleteBtn.setAttribute("class", "'material-icons'");
+            deleteBtn.setAttribute("class", "fa fa-trash-o");
             
             // when delete is clicked, remove from the html li, the subtaskArray, and also the subtaskHidden input
             deleteBtn.onclick = function() {
-                tagList.removeChild(li);
-                tagArray = tagArray.filter(function( obj ) {
-                  return obj.description !== description;
+                tagList.removeChild(btn);
+                tagArray = tagArray.filter(function( elem ) {
+                  return elem !== description;
                 });
                 tagHidden.value = JSON.stringify(tagArray);
+                console.log("tagArray", tagArray)
             }
            
-            li.appendChild(deleteBtn);
+            btn.appendChild(deleteBtn);
 
-            tagList.appendChild(li);
+            tagList.appendChild(btn);
         }
 
         // ++++++++++++++++++++++++++++++++  Weather  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -229,11 +229,7 @@
                     // get weather forcast on specific day and specific location
                     forcast(userLatitude,userLongitude,numUnix);
             })
-            
-
         }
-
-
         // get the forcast information from darksky API
         function forcast(latitude, longitude, time){
             const proxy = 'https://cors-anywhere.herokuapp.com/'
