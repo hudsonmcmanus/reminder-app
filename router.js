@@ -76,12 +76,12 @@ router.post('/register', async (req, res) => {
 // Social features - find users to add as friends
 router.get('/add-friend', grabUser, (req, res, next) => {
 	const { user } = req;
-	
+
 	// Checking if the user has logged in, if not, do not display page
 	if (!user) {
 		return next();
 	}
-	
+
 	// use .find() function to search for all users in database
 	// use .lean() function to have the result document as plain Javascript objects, not Mongoose Document
 	// https://mongoosejs.com/docs/tutorials/lean.html
@@ -324,33 +324,40 @@ router.post('/create', grabUser, async (req, res) => {
 	res.redirect('/landing-page');
 });
 
-router.post("/edit", async (req, res) => {
+router.post('/edit', async (req, res) => {
 	let reminderID = req.body.editReminderID;
 	const reminder = await Reminder.findById(reminderID)
 		.lean()
 		.exec();
-	return res.render('edit', {reminder: reminder})
+	return res.render('edit', { reminder: reminder });
 });
 
-router.post("/edit-reminder", async (req, res) => {
-	let { name, description, pickDate, subtaskHiddenEdit, tagHiddenEdit, editReminderID} = req.body;
+router.post('/edit-reminder', async (req, res) => {
+	let {
+		name,
+		description,
+		pickDate,
+		subtaskHiddenEdit,
+		tagHiddenEdit,
+		editReminderID
+	} = req.body;
 	let subtasks_array = JSON.parse(subtaskHiddenEdit);
-	let tags_array = JSON.parse(tagHiddenEdit)
+	let tags_array = JSON.parse(tagHiddenEdit);
 	// creating new date object using the input from user
 	let dateObj = new Date(pickDate + ':00');
 
 	let reminder = await Reminder.findByIdAndUpdate(
-		editReminderID, 
-		{ 
+		editReminderID,
+		{
 			$set: {
 				name: name,
 				description: description,
 				tags: tags_array,
 				subtasks: subtasks_array,
-				date: dateObj, 	
+				date: dateObj
 			}
 		},
-		{new: true},
+		{ new: true }
 	);
 
 	res.redirect('/landing-page');
@@ -379,7 +386,7 @@ router.get('/export-json', grabUser, async (req, res, next) => {
 			author: user._id
 		},
 		// Only the necessary fields
-		'_id name sharedWith description tags.completed tags.description subtasks date'
+		'_id name sharedWith description tags subtasks.completed subtasks.description date'
 	)
 		.lean()
 		.exec();
