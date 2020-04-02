@@ -289,11 +289,11 @@ router.get('/create', (req, res) => {
 });
 
 router.post('/create', grabUser, async (req, res) => {
-	let { name, description, date, time } = req.body;
+	let { name, description, selectDate, time } = req.body;
 	const { user } = req;
 
 	// creating new date object using the input from user
-	let dateObj = new Date(date + 'T' + time + ':00');
+	let dateObj = new Date(selectDate + ':00');
 
 	let reminder = new Reminder({
 		name: name,

@@ -51,17 +51,14 @@
                          <button type="button" onclick="addTag()">Add</button>
                     </div>
 
-                    <div class="form-check">
-                        <label for="date">Remind Me On a Day</label>
-                        <input id="datePicker" type="date" class="form-control" name="date" onchange="dateChange()">
+                    <div class="form-group">
+                        <label for="selectDate">Remind Me At:</label>
+                        <input class="form-control" type="datetime-local" id="selectDate"
+                               name="selectDate" onchange="dateChange()">
+                        <button type="button" id= 'weatherBtn' style="margin:2px 20px 2px; border-radius: 12px;" >🌂Bring an umbrella</button>
                     </div>
-                    <button type="button" id= 'weatherBtn' style="margin:2px 20px 2px; border-radius: 12px;" >🌂Bring an umbrella</button>
-                    <div class="form-check">
-                        <label for="time">Remind Me At a Time</label>
-                        <input id="timePicker" type="time" class="form-control" name="time">
-                    </div>
-                    <div class="modal-footer">
 
+                    <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="redirect()">Close</button>
                         <button type="submit" id="submitForm" class="btn btn-primary">Submit</button>
                     </div>
@@ -98,11 +95,7 @@
         let today = new Date();
         let time = today.getHours() + ":" + today.getMinutes();
         
-        // setting the default date to be the current date
-        document.getElementById('datePicker').valueAsDate = today;
-        
-        // setting the default time to be the current time
-        document.getElementById("timePicker").defaultValue = time;
+        document.getElementById("selectDate").value = today.toISOString().substring(0, 10) + "T" + today.getHours() + ":" + today.getMinutes(); 
         
         // upon clicking add subtask button...
         function addSubtask(){
@@ -208,7 +201,7 @@
         // get the date user inputted, this date can change with the input of the user
 
         function dateChange(){
-            let datePicked = document.getElementById('datePicker').value;
+            let datePicked = document.getElementById('selectDate').value.substring(0, 10);
 
             //convert this date to unix time
             let strTime = datePicked;
@@ -218,14 +211,11 @@
             // format unix time from ms to second for Darksky API use 
             let strUnix = unix_time.toString().slice(0,10);
             const numUnix = parseInt(strUnix);
-            console.log(numUnix);
 
             // get userlocation
             navigator.geolocation.getCurrentPosition(function(position){
                     userLatitude = position.coords.latitude
                     userLongitude = position.coords.longitude
-                    console.log(userLatitude);
-                    console.log(userLongitude);
                     // get weather forcast on specific day and specific location
                     forcast(userLatitude,userLongitude,numUnix);
             })
@@ -241,11 +231,9 @@
                     return res.json();
                 })
                 .then(data =>{
-                    console.log(data);
                     // [summary]
                     // day 0
                     const day0 = data.daily.data[0].icon;
-                    console.log(day0);
                     
                     // if it rains -> change the color of the button and disable it
                     if (day0 == 'rain'){
