@@ -76,9 +76,12 @@ router.post('/register', async (req, res) => {
 // Social features - find users to add as friends
 router.get('/add-friend', grabUser, (req, res, next) => {
 	const { user } = req;
+	
+	// Checking if the user has logged in, if not, do not display page
 	if (!user) {
 		return next();
 	}
+	
 	// use .find() function to search for all users in database
 	// use .lean() function to have the result document as plain Javascript objects, not Mongoose Document
 	// https://mongoosejs.com/docs/tutorials/lean.html
@@ -230,6 +233,11 @@ router.get('/add-mock-reminder', async (req, res) => {
 router.get('/landing-page', grabUser, async (req, res) => {
 	const { user } = req;
 
+	// Checking if the user has logged in, if not, do not display page
+	if (!user) {
+		return next();
+	}
+
 	let friendsList = user.friends;
 	let friends;
 
@@ -281,11 +289,11 @@ router.get('/create', (req, res) => {
 });
 
 router.post('/create', grabUser, async (req, res) => {
-	let { name, description, date, time } = req.body;
+	let { name, description, selectDate, time } = req.body;
 	const { user } = req;
 
 	// creating new date object using the input from user
-	let dateObj = new Date(date + 'T' + time + ':00');
+	let dateObj = new Date(selectDate + ':00');
 
 	let reminder = new Reminder({
 		name: name,
@@ -316,7 +324,37 @@ router.post('/create', grabUser, async (req, res) => {
 	res.redirect('/landing-page');
 });
 
-// router.put => edit the reminder
+router.post("/edit", async (req, res) => {
+	let reminderID = req.body.editReminderID;
+	const reminder = await Reminder.findById(reminderID)
+		.lean()
+		.exec();
+	return res.render('edit', {reminder: reminder})
+});
+
+router.post("/edit-reminder", async (req, res) => {
+	let { name, description, pickDate, subtaskHiddenEdit, tagHiddenEdit, editReminderID} = req.body;
+	let subtasks_array = JSON.parse(subtaskHiddenEdit);
+	let tags_array = JSON.parse(tagHiddenEdit)
+	// creating new date object using the input from user
+	let dateObj = new Date(pickDate + ':00');
+
+	let reminder = await Reminder.findByIdAndUpdate(
+		editReminderID, 
+		{ 
+			$set: {
+				name: name,
+				description: description,
+				tags: tags_array,
+				subtasks: subtasks_array,
+				date: dateObj, 	
+			}
+		},
+		{new: true},
+	);
+
+	res.redirect('/landing-page');
+});
 
 router.delete('/delete-reminder/:_id', function(req, res) {
 	let reminderID = req.body.reminderID;
