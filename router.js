@@ -11,7 +11,7 @@ const { grabUser } = require('./middleware');
 router.get('/', grabUser, (req, res) => {
 	const { user } = req;
 	res.render('home', {
-		user
+		user,
 	});
 });
 
@@ -26,9 +26,7 @@ router.get('/logout', (req, res) => {
 
 router.post('/login', async (req, res) => {
 	const { username, password } = req.body;
-	const user = await User.findOne({ username }, '_id password')
-		.lean()
-		.exec();
+	const user = await User.findOne({ username }, '_id password').lean().exec();
 	if (user) {
 		const isMatch = await bcrypt.compare(password, user.password);
 		if (isMatch) {
@@ -36,12 +34,12 @@ router.post('/login', async (req, res) => {
 			res.redirect('landing-page');
 		} else {
 			res.render('login', {
-				error: 'Invalid password'
+				error: 'Invalid password',
 			});
 		}
 	} else {
 		res.render('login', {
-			error: 'User not found'
+			error: 'User not found',
 		});
 	}
 });
@@ -54,19 +52,19 @@ router.post('/register', async (req, res) => {
 	const { username, password, passwordRepeat } = req.body;
 	if (await User.exists({ username })) {
 		res.render('register', {
-			error: 'Username already taken'
+			error: 'Username already taken',
 		});
 		return;
 	}
 	if (password !== passwordRepeat) {
 		res.render('register', {
-			error: 'Passwords do not match'
+			error: 'Passwords do not match',
 		});
 		return;
 	}
 	const user = new User({
 		username,
-		password
+		password,
 	});
 	await user.save();
 	res.login({ id: user._id });
@@ -87,12 +85,12 @@ router.get('/add-friend', grabUser, (req, res, next) => {
 	// https://mongoosejs.com/docs/tutorials/lean.html
 	User.find()
 		.lean()
-		.exec(function(err, docs) {
+		.exec(function (err, docs) {
 			res.render('user/add-friend', {
 				users: docs,
 				helpers: {
 					// Helper function to check if "Add Friend" button should be displayed
-					buttonCheck: function(userObj) {
+					buttonCheck: function (userObj) {
 						// If it is the same user, don't display Add Friend Button
 						if (userObj.username == user.username) {
 							return false;
@@ -107,8 +105,8 @@ router.get('/add-friend', grabUser, (req, res, next) => {
 						}
 						// Otherwise, display Add Friend Button
 						return true;
-					}
-				}
+					},
+				},
 			});
 		});
 });
@@ -118,15 +116,10 @@ router.post('/add-friend', grabUser, async (req, res) => {
 	const { user } = req;
 
 	// Update the friends set within the User object
-	let doc = User.findOneAndUpdate(
+	await User.findOneAndUpdate(
 		{ username: user.username },
 		// use addToSet method to ensure no duplicates
-		{ $addToSet: { friends: req.body.newFriend } },
-		function(err, raw) {
-			if (err) {
-				console.log(err);
-			}
-		}
+		{ $addToSet: { friends: req.body.newFriend } }
 	);
 	// Used to verify that the friends have been added...
 	// doc = await User.findOne({"username": user.username});
@@ -141,7 +134,7 @@ router.post('/share-reminder', async (req, res) => {
 	let reminderID = req.body.reminderID;
 
 	for (let i = 0; i < selectedUsers.length; i++) {
-		Reminder.findById(reminderID).exec(async function(err, doc) {
+		Reminder.findById(reminderID).exec(async function (err, doc) {
 			// create new ID, but use a copy of the document
 			doc._id = mongoose.Types.ObjectId();
 			// set the document as new
@@ -156,7 +149,7 @@ router.post('/share-reminder', async (req, res) => {
 });
 
 // Sharing multiple reminders with one or more friends
-router.post('/share-multiple-reminders', async (req, res) => {
+router.post('/share-multiple-reminders', async (req) => {
 	let selectedRemindersMultiple = JSON.parse(
 		req.body.selectedRemindersMultiple
 	);
@@ -168,7 +161,7 @@ router.post('/share-multiple-reminders', async (req, res) => {
 
 		// for each friend selected
 		for (let j = 0; j < selectedFriendsMultiple.length; j++) {
-			Reminder.findById(nextReminderID).exec(async function(err, doc) {
+			Reminder.findById(nextReminderID).exec(async function (err, doc) {
 				// create new ID, but use a copy of the document
 				doc._id = mongoose.Types.ObjectId();
 				// set the document as new
@@ -194,7 +187,7 @@ router.get('/add-mock-users', async (req, res) => {
 		{ username: 'kirk', password: 'banana' },
 		{ username: 'jessica', password: 'orange' },
 		{ username: 'hudson', password: 'grape' },
-		{ username: 'cindy', password: 'mango' }
+		{ username: 'cindy', password: 'mango' },
 	];
 
 	for (const data of mockData) {
@@ -207,9 +200,7 @@ router.get('/add-mock-users', async (req, res) => {
 
 // Create a reminder (temporary)
 router.get('/add-mock-reminder', async (req, res) => {
-	const user = await User.findOne({ username: 'mike' }, '_id')
-		.lean()
-		.exec();
+	const user = await User.findOne({ username: 'mike' }, '_id').lean().exec();
 	if (!user) {
 		res.send('❌ user not found');
 		return;
@@ -223,14 +214,14 @@ router.get('/add-mock-reminder', async (req, res) => {
 		tags: ['food', 'essentials'],
 		subtasks: ['Get eggs', 'Get milk', 'Spend money'],
 		// 1 day from now
-		date: new Date(Date.now() + 1000 * 60 * 60 * 24)
+		date: new Date(Date.now() + 1000 * 60 * 60 * 24),
 	});
 	await reminder.save();
 
 	res.json(reminder);
 });
 
-router.get('/landing-page', grabUser, async (req, res) => {
+router.get('/landing-page', grabUser, async (req, res, next) => {
 	const { user } = req;
 
 	// Checking if the user has logged in, if not, do not display page
@@ -243,11 +234,11 @@ router.get('/landing-page', grabUser, async (req, res) => {
 
 	// Finding all users right now - need to find only friends!
 	User.find({
-		_id: friendsList
+		_id: friendsList,
 		// _id: friendsList[2],
 	})
 		.lean()
-		.exec(function(err, docs) {
+		.exec(function (err, docs) {
 			if (err) {
 				console.log(err);
 				return;
@@ -261,25 +252,25 @@ router.get('/landing-page', grabUser, async (req, res) => {
 		author: user._id,
 		// Filtering reminders to display only upcoming ones.
 		// Reminders that are older than the current date are not displayed.
-		date: { $gte: Date.now() }
+		date: { $gte: Date.now() },
 	})
 		.lean()
-		.then(reminder => {
+		.then((reminder) => {
 			const context = {
-				reminders: reminder.map(reminderProperty => {
+				reminders: reminder.map((reminderProperty) => {
 					return {
 						_id: reminderProperty._id,
 						name: reminderProperty.name,
 						description: reminderProperty.description,
 						date: reminderProperty.date,
 						subtasks: reminderProperty.subtasks,
-						tags: reminderProperty.tags
+						tags: reminderProperty.tags,
 					};
-				})
+				}),
 			};
 			res.render('landing-page', {
 				reminder: context.reminders,
-				friends: friends
+				friends: friends,
 			});
 		});
 });
@@ -288,9 +279,11 @@ router.get('/create', (req, res) => {
 	res.render('create');
 });
 
-router.post('/create', grabUser, async (req, res) => {
-	let { name, description, selectDate, time } = req.body;
+router.post('/create', grabUser, async (req, res, next) => {
 	const { user } = req;
+	if (!user) next;
+
+	let { name, description, selectDate } = req.body;
 
 	// creating new date object using the input from user
 	let dateObj = new Date(selectDate + ':00');
@@ -302,7 +295,7 @@ router.post('/create', grabUser, async (req, res) => {
 		description: description,
 		tags: [],
 		subtasks: [],
-		date: dateObj
+		date: dateObj,
 	});
 
 	if (req.body.subtaskHidden) {
@@ -326,9 +319,7 @@ router.post('/create', grabUser, async (req, res) => {
 
 router.post('/edit', async (req, res) => {
 	let reminderID = req.body.editReminderID;
-	const reminder = await Reminder.findById(reminderID)
-		.lean()
-		.exec();
+	const reminder = await Reminder.findById(reminderID).lean().exec();
 	return res.render('edit', { reminder: reminder });
 });
 
@@ -339,14 +330,14 @@ router.post('/edit-reminder', async (req, res) => {
 		pickDate,
 		subtaskHiddenEdit,
 		tagHiddenEdit,
-		editReminderID
+		editReminderID,
 	} = req.body;
 	let subtasks_array = JSON.parse(subtaskHiddenEdit);
 	let tags_array = JSON.parse(tagHiddenEdit);
 	// creating new date object using the input from user
 	let dateObj = new Date(pickDate + ':00');
 
-	let reminder = await Reminder.findByIdAndUpdate(
+	await Reminder.findByIdAndUpdate(
 		editReminderID,
 		{
 			$set: {
@@ -354,8 +345,8 @@ router.post('/edit-reminder', async (req, res) => {
 				description: description,
 				tags: tags_array,
 				subtasks: subtasks_array,
-				date: dateObj
-			}
+				date: dateObj,
+			},
 		},
 		{ new: true }
 	);
@@ -363,10 +354,10 @@ router.post('/edit-reminder', async (req, res) => {
 	res.redirect('/landing-page');
 });
 
-router.delete('/delete-reminder/:_id', function(req, res) {
+router.delete('/delete-reminder/:_id', function (req, res) {
 	let reminderID = req.body.reminderID;
 
-	Reminder.findByIdAndRemove(reminderID, function(err) {
+	Reminder.findByIdAndRemove(reminderID, function (err) {
 		if (err) {
 			console.log(err);
 		}
@@ -383,7 +374,7 @@ router.get('/export-json', grabUser, async (req, res, next) => {
 
 	const reminders = await Reminder.find(
 		{
-			author: user._id
+			author: user._id,
 		},
 		// Only the necessary fields
 		'_id name sharedWith description tags subtasks.completed subtasks.description date'
@@ -393,7 +384,7 @@ router.get('/export-json', grabUser, async (req, res, next) => {
 
 	res.set('Content-Disposition', 'attachment; filename="reminderBackup.json"');
 	res.json({
-		reminders
+		reminders,
 	});
 });
 
