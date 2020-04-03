@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Remindr</title>
+	<title>Remindr: An Everyday Use App!</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
@@ -33,7 +33,7 @@
 		function shareReminder(share) {
 			// get the reminder that is selected for sharing
 			reminderID = share.parentNode.getElementsByClassName("reminderID")[0].innerText;
-			reminderName = share.parentNode.getElementsByClassName("card-title")[0].innerText;
+			reminderName = share.parentNode.getElementsByClassName("card-header")[0].innerText;
 			let shareReminderTitle = document.getElementById("shareReminderTitle");
 			shareReminderTitle.innerHTML = "Share Reminder: " + reminderName
 			$('#shareReminderModal').modal('show');
@@ -150,7 +150,7 @@
 		/**** DELETE REMINDER ****/
 		function deleteReminder(reminder) {
 			reminderID = reminder.parentNode.getElementsByClassName("reminderID")[0].innerText;
-			reminderName = reminder.parentNode.getElementsByClassName("card-title")[0].innerText;
+			reminderName = reminder.parentNode.getElementsByClassName("card-header")[0].innerText;
 			$('#deleteReminderModal').modal('show');
 		}
 
