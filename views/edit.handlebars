@@ -26,7 +26,7 @@
                 <form action="/edit-reminder" method="POST">
                     <div class="form-group">
                         <input name="editReminderID" type="hidden" value="{{reminder._id}}">
-                        <input type="text" class="form-control" name="name" placeholder="Reminder Title" value="{{reminder.name}}">
+                        <input type="text" class="form-control" name="name" placeholder="Reminder Title" value="{{reminder.name}}" required>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" name="description" placeholder="Description" value="{{reminder.description}}">
@@ -69,7 +69,7 @@
                         <p id="existingDate"hidden>{{reminder.date}}</p>
                         <label for="pickDate">Remind Me At:</label>
                         <input class="form-control" type="datetime-local" id="pickDate"
-                               name="pickDate">
+                               name="pickDate" required>
                     </div>
 
                     <div class="modal-footer">

@@ -30,7 +30,7 @@
                     <div class="form-group">
                     <!--Get the title, description and date and time-->
                     <div class="form-group">
-                        <input type="text" class="form-control" name="name" placeholder="Reminder Title">
+                        <input type="text" class="form-control" name="name" placeholder="Reminder Title" required>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" name="description" placeholder="Description">
@@ -54,7 +54,7 @@
                     <div class="form-group">
                         <label for="selectDate">Remind Me At:</label>
                         <input class="form-control" type="datetime-local" id="selectDate"
-                               name="selectDate" onchange="dateChange()">
+                               name="selectDate" onchange="dateChange()" required>
                         <button type="button" id= 'weatherBtn' style="margin:2px 20px 2px; border-radius: 12px;" >🌂Bring an umbrella</button>
                     </div>
 
