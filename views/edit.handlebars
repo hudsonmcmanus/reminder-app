@@ -34,7 +34,13 @@
                     <ul class='list-group' id="subtaskListEdit">
                         {{#each reminder.subtasks}}
                             <li class="existingSubtasks wordWrap list-group-item">
+                                <input type="checkbox" name="subtaskCheck" class="subtaskCheck" 
+                                {{#if completed}}                                
+                                    checked
+                                {{/if}}
+                                >
                                 {{description}}
+                                <input type="hidden" class="subtaskCompleted" name="subtaskCompleted" value="{{completed}}">
                                 <button type="button" class="deleteSubtask btn btn-secondary float-right">Delete</button>
                             </li>
                         {{/each}}
@@ -105,7 +111,8 @@
         let existingSubtasks = subtaskList.getElementsByClassName("existingSubtasks");
         for (let i = 0; i < existingSubtasks.length; i++) {
             let description = existingSubtasks[i].innerText.replace("Delete", "");
-            let newSubtask = {completed: false, description: description};
+            let checked = existingSubtasks[i].getElementsByClassName("subtaskCompleted")[0].value;
+            let newSubtask = {completed: checked, description: description};
             // add it to the array of subtask objects
             subtaskArray.push(newSubtask);
 
@@ -126,6 +133,23 @@
         }
         
         $(document).ready(function() {            
+            // Store the status of checked
+            $(".subtaskCheck").click(function() {
+                let subtaskDescription = $(this).parent()[0].innerText.replace("Delete", "");
+                let checked = $(this)[0].checked;
+                subtaskArray.forEach(function(obj) {
+                    if (obj.description === subtaskDescription) {
+                        if (checked) {
+                            obj.completed = true;
+                        }
+                        else {
+                            obj.completed = false;
+                        }
+                    }
+                });
+                subtaskHidden.value = JSON.stringify(subtaskArray);
+            });
+
             // disable enter button submitting form for every text input
             $(document).on("keypress", 'form', function (e) {
                 var code = e.keyCode || e.which;
@@ -177,7 +201,29 @@
         function subtaskDisplay(description) {
             // create an li element
             let li = document.createElement("li");
-            li.setAttribute("class", "wordWrap list-group-item");       
+            li.setAttribute("class", "wordWrap list-group-item");    
+
+            let checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.name="subtaskCheck";
+            // Add an onclick to handle saving the checked status
+            checkbox.onclick = function() {
+                let subtaskDescription = description;
+                let checked = checkbox.checked;
+                subtaskArray.forEach(function(obj) {
+                    if (obj.description === subtaskDescription) {
+                        if (checked) {
+                            obj.completed = true;
+                        }
+                        else {
+                            obj.completed = false;
+                        }
+                    }
+                });
+                subtaskHidden.value = JSON.stringify(subtaskArray);
+            }
+
+            li.appendChild(checkbox);
 
             // add the description text to the li element
             li.appendChild(document.createTextNode(description));
