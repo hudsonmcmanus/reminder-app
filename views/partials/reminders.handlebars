@@ -2,11 +2,12 @@
     <div class="page-header">
         <div class="container">
             <div class="row">
-                <div class="col-10">
-                    <h1>Your Current Reminders: </h1>
+                <div class="container p-3 my-3 text-black">
+                    <h1>Your Reminders</h1>
                 </div>
-                <div class="col">
-                    <button type="button" class="btn btn-primary" style="position:absolute; right:0px;bottom:0px" onclick="shareMultipleReminders()">Share Reminders</button>
+                <div class="share-reminder">
+                    <button type="button" class="btn btn-primary"
+                        onclick="shareMultipleReminders()">Share Reminders</button>
                 </div>
             </div>
         </div>
@@ -17,32 +18,35 @@
         <div class="card-body fadeIn">
 
             <p id="reminderId" class="reminderID" hidden>{{_id}}</p>
-            <h5 class="card-title">{{name}}</h5> <!--Reminder Name-->
-            <h6 class="card-subtitle mb-2 text-muted">{{date}}</h6> <!--Date/Time-->
-            <p class="card-text">{{description}}</p> <!--Description-->
+            <h5 class="card-title">{{name}}</h5>
+            <!--Reminder Name-->
+            <h6 class="card-subtitle mb-2 text-muted">{{date}}</h6>
+            <!--Date/Time-->
+            <p class="card-text">{{description}}</p>
+            <!--Description-->
 
             <ul class="fadeIn">
                 {{#each subtasks}}
-                    {{#if completed}}
-                        <li><s>{{description}}</s></li>
-                    {{else}}
-                        <li>{{description}}</li>
-                    {{/if}}
+                {{#if completed}}
+                <li><s>{{description}}</s></li>
+                {{else}}
+                <li>{{description}}</li>
+                {{/if}}
                 {{/each}}
             </ul>
 
             <div class="fadeIn">
                 {{#each tags}}
-                    <li>{{this}}</li>
+                <li>{{this}}</li>
                 {{/each}}
             </div>
-            
+
             <form action="/edit" method="POST">
                 <input type="hidden" name="editReminderID" value={{_id}}>
-                <button type="submit">Edit</button>
-            </form> 
-            <button type="button" onclick="deleteReminder(this)">Delete</button>
-            <button type="button" onclick="shareReminder(this)">Share</button>
+                <button type="submit" class="btn btn-warning m-1">Edit</button>
+            </form>
+            <button type="button" class="btn btn-danger m-1" onclick="deleteReminder(this)">Delete</button>
+            <button type="button" class="btn btn-primary m-1" onclick="shareReminder(this)">Share</button>
         </div>
     </div>
     {{/each}}

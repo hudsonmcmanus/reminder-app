@@ -10,6 +10,11 @@ body {
 	background: #e9f3f6;
 }
 
+.share-reminder {
+	position: relative;
+	margin: 15px;
+}	
+
 /*--- navigation bar ---*/
 
 .navbar {
