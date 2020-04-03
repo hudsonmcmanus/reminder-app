@@ -147,15 +147,15 @@
         }
 
         let tagArray = [];
-        // upon clicking add subtask button...
+        // upon clicking add tag button...
         function addTag(){
             let description = document.getElementById("newTag").value;
             let newTag = description;
             
-            // add it to the array of subtask objects
+            // add it to the array of tag objects
             tagArray.push(newTag);
 
-            // display it as a list on the html page
+            // display it on the html page
             tagDisplay(description); 
 
             // save it to the hidden input that will be eventually sent to router.js as a json string
@@ -165,7 +165,8 @@
             document.getElementById("newTag").value = "";
         }
 
-        // display the list of subtasks that have been entered
+        // display the list of tags that have been entered
+        let colors = ['#ca7159', '#f0ebe2','#cbc0aa','#f3d18e','#b7cdc2', '#84a295', '#9fb6c3', '#f9b49b','#edb1ae'];
         function tagDisplay(description) {
             // get the ul element
             let tagList = document.getElementById("tagList");
@@ -173,7 +174,11 @@
             let btn = document.createElement("button");
             btn.disabled = true;
             // btn.setAttribute("class", "tag");
-            btn.setAttribute("class", "btn btn-secondary");
+            btn.setAttribute("class", 'tag');
+            btn.style = 'margin:2px 5px 2px; border-radius: 12px; color:white'
+            // each tag will have a different color
+            btn.style.background=colors[Math.floor(Math.random()*colors.length)]; 
+
 
             btn.appendChild(document.createTextNode(description));
 
@@ -181,7 +186,7 @@
             let deleteBtn = document.createElement("i");
             deleteBtn.setAttribute("class", "fa fa-trash-o");
             
-            // when delete is clicked, remove from the html li, the subtaskArray, and also the subtaskHidden input
+            // when delete is clicked, remove from the html li, the tagArray, and also the subtaskHidden input
             deleteBtn.onclick = function() {
                 tagList.removeChild(btn);
                 tagArray = tagArray.filter(function( elem ) {
