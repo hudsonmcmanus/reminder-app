@@ -13,6 +13,11 @@
 - Full App Testing (Kirk, Cindy, Jessica, Hudson, Mike)
 - Bug Fixing (Kirk, Cindy, Jessica, Hudson, Mike)
 
+#### Short Term - Sprint Goal:
+- Finalize app and complete full app testing
+
+---
+
 ### Sprint 4 Action Items (March 24 - March 30):
 - Documentation (Kirk)
 - Promotional Landing Page (Hudson)
