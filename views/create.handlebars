@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Remindr</title>
+	<title>Remindr: An Everyday Use App!</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
@@ -13,7 +13,7 @@
 <body>
 	{{> navbar-landing-page}}
 
-	<div class="modal-fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="reminder">
+	<div class="modal-fade fadeIn" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="reminder">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content modal-fluid">
             <div class="modal-header">
@@ -55,7 +55,7 @@
                         <label for="selectDate">Remind Me At:</label>
                         <input class="form-control" type="datetime-local" id="selectDate"
                                name="selectDate" onchange="dateChange()" required>
-                        <button type="button" id= 'weatherBtn' style="margin:2px 20px 2px; border-radius: 12px;" >🌂Bring an umbrella</button>
+                        <button type="button" id= "weatherBtn" >🌂BRING AN UMBRELLA</button>
                     </div>
 
                     <div class="modal-footer">
@@ -73,6 +73,7 @@
       src="https://code.jquery.com/jquery-3.4.1.min.js"
       integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
       crossorigin="anonymous"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
     <script>
         function redirect(){
             location.replace("/landing-page")

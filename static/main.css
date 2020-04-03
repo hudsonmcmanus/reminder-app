@@ -1,7 +1,16 @@
+/*--- custom css ---*/
 body {
 	padding: 0;
 	margin: 0;
-	background: #e9f3f6;
+	background: #e5ebff;
+}
+
+ul {
+	padding-left: 0;
+}
+
+ul li{
+	list-style-type: none;
 }
 
 .background-body {
@@ -10,15 +19,67 @@ body {
 	background: #e9f3f6;
 }
 
+.customNavBar {
+	border-bottom: 2px solid rgb(59, 59, 83)
+}
+
 .share-reminder {
 	position: relative;
-	margin: 15px;
-}	
+	margin: 1em;
+}
+
+.individualReminder {
+	margin-top: 0.5em;
+}
+
+.reminderDescription {
+	background-color: rgb(236, 236, 236);
+	padding: 2em 1em 2em 1em;
+	border: 1px solid white;
+	border-radius: 10px;
+}
+
+.tags {
+	display: inline-block;
+}
+
+.homeBody {
+	background-color: rgb(236, 236, 236);
+}
+
+.teamLink {
+	color: white;
+	text-decoration: none;
+	transition: .3s all;
+}
+
+.teamLink:hover {
+	text-decoration: none;
+	color: #000;
+}
+
+#landing-page-title {
+	color: white;
+}
+
+#homeNavBar {
+	background-color: rgb(97, 97, 97);
+}
+
+#weatherBtn {
+	border-radius: 10px;
+	border: none;
+	padding: 0.5em;
+}
+
+#toolsList li{
+	background-color: rgba(255, 255, 255, 0.3);
+}
 
 /*--- navigation bar ---*/
 
 .navbar {
-	background: #4660b4;
+	background: #6875a1;
 }
 
 .nav-link,
@@ -34,6 +95,7 @@ body {
 
 .nav-link {
 	margin-right: 1em !important;
+	transition: .3s all;
 }
 
 .nav-link:hover {
@@ -51,7 +113,7 @@ body {
 	background-size: cover;
 	background-position: center;
 	position: relative;
-	height: 100vh;
+	height: 80vh;
 }
 
 .overlay {
