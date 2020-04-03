@@ -23,7 +23,11 @@
 
             <ul class="fadeIn">
                 {{#each subtasks}}
-                    <li>{{description}}</li>
+                    {{#if completed}}
+                        <li><s>{{description}}</s></li>
+                    {{else}}
+                        <li>{{description}}</li>
+                    {{/if}}
                 {{/each}}
             </ul>
 

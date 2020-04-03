@@ -68,41 +68,36 @@
 		let selectedRemindersMultiple = [];
 
 		$(document).ready(function(){
-			// $('.editBtn').click(function(){
-			// 	let editReminderID = $(this).parent().find('.reminderID')[0].innerText;
-			// 	$.ajax({
-			// 		type: "POST",
-			// 		url: "/edit",
-			// 		data: {
-			// 			reminderID: editReminderID,
-			// 		},
-			// 	});
-			// });
-
 			// for single reminder sharing
 			$('#shareBtn').click(function() {
 				// get all checkbox elements and find the ones that are checked
 				let checkboxes = document.getElementsByClassName("shareWith");
+				let shareSingleErrorMessage = document.getElementById("shareSingleErrorMessage");
 				for (let i = 0; i < checkboxes.length; i++) {
 					if (checkboxes[i].checked == true){
 						// if checked, push the associated userID to the array
 						selectedUsers.push(checkboxes[i].parentNode.getElementsByClassName("friendID")[0].innerText);
 					}
 				}
-				// send a POST request
-				$.ajax({
-				  type: "POST",
-				  url: "/share-reminder",
-				  data: {
-				  	reminderID: reminderID, 
-				  	selectedUsers: JSON.stringify(selectedUsers),
-				  },				  
-				});	
-
-				// reset the values and hide modal
-				selectedUsers = [];
-				clearCheckboxes();
-				$('#shareReminderModal').modal('hide');	
+				// if no friend selected...
+				if (!Array.isArray(selectedUsers) || !selectedUsers.length) {
+					shareSingleErrorMessage.innerHTML = "Error. No Friend Selected!" 
+				}				
+				else {
+					// send a POST request
+					$.ajax({
+					  type: "POST",
+					  url: "/share-reminder",
+					  data: {
+					  	reminderID: reminderID, 
+					  	selectedUsers: JSON.stringify(selectedUsers),
+					  },				  
+					});	
+					// reset the values and hide modal
+					selectedUsers = [];
+					clearCheckboxes();
+					$('#shareReminderModal').modal('hide');	
+				}				
 			});
 
 			// for multiple reminder sharing
