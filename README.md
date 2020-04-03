@@ -7,7 +7,13 @@
 * Hudson McManus
 * Mike Sampson
 
-### Sprint 4 Action Items (March 24 - March 31):
+### Sprint 5 Action Items (March 31 - April 7):
+- Documentation (Kirk)
+- Promotional Landing Page (Hudson)
+- Full App Testing (Kirk, Cindy, Jessica, Hudson, Mike)
+- Bug Fixing (Kirk, Cindy, Jessica, Hudson, Mike)
+
+### Sprint 4 Action Items (March 24 - March 30):
 - Documentation (Kirk)
 - Promotional Landing Page (Hudson)
 - Weather Integration (Cindy)
