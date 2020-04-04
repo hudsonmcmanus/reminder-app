@@ -266,12 +266,15 @@
             document.getElementById("newTagEdit").value = "";
         }
 
+        let colors = ['#ca7159', '#f0ebe2','#cbc0aa','#f3d18e','#b7cdc2', '#84a295', '#9fb6c3', '#f9b49b','#edb1ae'];
+
         // display the list of subtasks that have been entered
         function tagDisplay(description) {            
             let btn = document.createElement("button");
             btn.disabled = true;
             // btn.setAttribute("class", "tag");
-            btn.setAttribute("class", "btn btn-secondary");
+            btn.setAttribute("class", 'tag');
+            btn.style = 'margin:2px 5px 2px; border-radius: 12px; color:white'
 
             btn.appendChild(document.createTextNode(description));
 
