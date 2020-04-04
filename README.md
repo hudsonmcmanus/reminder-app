@@ -1,71 +1,64 @@
-# Reminder App - Plan of Action
+# Reminder App Documentation
 
-## Team Members:
-* Cindy Lu
-* Kirk Wong
-* Jessica Hong
-* Hudson McManus
-* Mike Sampson
+### Project Purpose
+* As part of our COMP 1800 course, the goal was to design and build a reminder application with these major features:
+	* Create, edit, and delete reminders
+	* Share reminders with friends in the application
+	* Functional user registration, login, and authentication
+* Practice collaboration with team members in an agile development setting:
+	* Sprint planning, using a Trello board to keep track of tasks
+	* Using git for version control and methods such as cloning, branching, committing, pull requests, and merging branches
+	* Project Management 
+---
 
-### Sprint 5 Action Items (March 31 - April 7):
-- Documentation (Kirk)
-- Promotional Landing Page (Hudson)
-- Full App Testing (Kirk, Cindy, Jessica, Hudson, Mike)
-- Bug Fixing (Kirk, Cindy, Jessica, Hudson, Mike)
-
-#### Short Term - Sprint Goal:
-- Finalize app and complete full app testing
+### Team Members
+* Kirk Wong kwong447@my.bcit.ca
+* Cindy Lu cindylu26810@gmail.com 
+* Mike Sampson mikesampson68@gmail.com 
+* Hudson McManus hudsonmcmanus@gmail.com 
+* Jessica Hong jeessicahong@gmail.com
 
 ---
 
-### Sprint 4 Action Items (March 24 - March 30):
-- Documentation (Kirk)
-- Promotional Landing Page (Hudson)
-- Weather Integration (Cindy)
-- Reminder Associations (Cindy/Kirk)
-- Reminder Persistence (Hudson/Jessica)
-
-#### Short Term - Sprint Goal:
-- Finish most, if not all, of the reminders app by the end of the sprint so we can spend time testing and fixing bugs
+### Tools and Technologies 
+* Node.js 
+* Express.js
+* Mongoose / MongoDB
+* Bootstrap
+* Handlebars.js
+* HTML/CSS
 
 ---
 
-### Sprint 2.5/3 Action Items (March 10 - March 23):
-- Reminders Modification (Jessica/Hudson)
-- Users Feature (Kirk)
-- Authentication (Mike)
-- Front End (Cindy)
+### Code and Folder Structure
+##### app.js
+* The base file that sets up the express application and other packages that will be used in the application
 
----
+##### router.js
+* Taken from https://expressjs.com/en/guide/routing.html: “Routing refers to how an application’s endpoints (URIs) respond to client requests.”
+* The router.js file handles the bulk of the reminder application’s logic including rendering pages when there are GET requests to querying and saving data in the database
+* Here, you will find the various endpoints such as /create, /edit, and /add-friend.
 
-### Sprint 2 Action Items (March 3 - March 9):
-- Start on Draft Front-End (Cindy)
-- Start on Draft DB (Mike)
-- Trello tasks (Everybody)
-    - Add yourselves as Members to user stories
-    - Break down into tasks if necessary
-    - Move tasks into sprint backlog / in progress for this sprint
-- Start on your features (Everybody)
+##### database.js
+* Sets up the two MongoDB schemas: reminderSchema and userSchema, which will be used to create and save reminders and users.
+
+##### views folder
+* Contains all of the handlebars files used to display the pages in the application. This includes the create page, edit page, login page, etc.
+* Partials subfolder contains templates that can be shared among different templates. This includes the navbar, footer, and bootstrap modals. 
+
+##### static folder
+* Contains the static files including images, CSS files, Javascript files, etc.
 
 --- 
 
-### Sprint 1 - Roles: 
-> * **Trello Board:** Cindy, Mike, Kirk
-> * **Set Up GitHub Repository:** Hudson
-> * **Plan Of Action Document:** Kirk, Jessica
-> * **Wireframe Diagram:** Hudson, Mike, Jessica
-
-> * **Front End Developer(s):** Jessica, Kirk
-> * **Back End Developer(s):** Mike, Hudson
-> * **SCRUM Master:** Hudson
-> * **Quality Control:** Cindy
-
-**Trello Board Link:** https://trello.com/invite/b/SUR7RdCE/c251b19ad5238d939be39112df3a1fbf/comp1800termproject
-
-## Long Term Goal: 
-> Create a functional reminder app with all the functionalities described 
-
-## Short Term Goal: 
-> * Define Sprint Backlog tasks 
-> * Assign tasks from Trello Board to team members 
-> * Create a draft of the reminder app from the wireframe diagram
+### How to run locally
+* You must have node.js and mongoDB installed
+	* https://nodejs.org/en/download/
+	* https://www.mongodb.com/download-center/community
+* Ensure that mongoDB is running
+* Navigate to the folder in your terminal
+* Type “npm install” to download the package dependencies
+* Create a config.json file that sets the port, database URL, and jwt secret
+	* config.json can be an exact copy of the config.sample.json
+* Run the app using the terminal command: “node app”
+* In your browser, navigate to http://localhost:3000/ (port is 3000 if you copied the config)
