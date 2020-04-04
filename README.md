@@ -62,3 +62,21 @@
 	* config.json can be an exact copy of the config.sample.json
 * Run the app using the terminal command: “node app”
 * In your browser, navigate to http://localhost:3000/ (port is 3000 if you copied the config)
+
+---
+
+### Screenshots
+##### Landing Page
+![landing_page](https://github.com/hudsonmcmanus/reminder-app/blob/master/screenshots/landing_page.JPG)
+##### Main Page
+![main_page](https://github.com/hudsonmcmanus/reminder-app/blob/master/screenshots/main_page.JPG)
+##### Create Reminder
+![create_reminder](https://github.com/hudsonmcmanus/reminder-app/blob/master/screenshots/create_reminder.JPG)
+##### Add Friend
+![add_friend](https://github.com/hudsonmcmanus/reminder-app/blob/master/screenshots/add_friend.JPG)
+##### Share Reminders
+![share_reminders](https://github.com/hudsonmcmanus/reminder-app/blob/master/screenshots/share_reminders.JPG)
+---
+
+### Plan of Action
+[Plan Of Action](https://github.com/hudsonmcmanus/reminder-app/blob/master/PlanOfAction.md)
