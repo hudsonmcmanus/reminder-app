@@ -48,12 +48,12 @@
                     <input type="hidden" id="subtaskHiddenEdit" name="subtaskHiddenEdit">
                     <div class="form-group">
                         <input type="text" class="form-control" name="subtasksEdit" placeholder="New Subtask" id="newSubtaskEdit">
-                        <button type="button" onclick="addSubtask()">Add</button>
+                        <button type="button" class="btn btn-success" onclick="addSubtask()">Add</button>
                     </div>
 
                     <div id="tagListEdit">
                         {{#each reminder.tags}}
-                            <button class="existingTags wordWrap btn btn-secondary" disabled>
+                            <button class="existingTags wordWrap" style ="margin:2px 5px 2px; border-radius: 12px; color:white; background-color: #c7dbf0;" disabled>
                                 {{this}}                                
                                 <i class="fa fa-trash-o deleteTag"></i>
                             </button>
@@ -62,7 +62,7 @@
                     <input type="hidden" id="tagHiddenEdit" name="tagHiddenEdit">
                     <div class="form-group" id="tag-container">
                         <input type="text" class="form-control" name="tags" placeholder="New Tag" id="newTagEdit">
-                         <button type="button" onclick="addTag()">Add</button>
+                         <button type="button" class="btn btn-success" onclick="addTag()">Add</button>
                     </div>
 
                     <div class="form-group">
@@ -266,12 +266,17 @@
             document.getElementById("newTagEdit").value = "";
         }
 
+        let colors = ['#ca7159', '#f0ebe2','#cbc0aa','#f3d18e','#b7cdc2', '#84a295', '#9fb6c3', '#f9b49b','#edb1ae'];
+
         // display the list of subtasks that have been entered
         function tagDisplay(description) {            
             let btn = document.createElement("button");
             btn.disabled = true;
             // btn.setAttribute("class", "tag");
-            btn.setAttribute("class", "btn btn-secondary");
+            btn.setAttribute("class", 'tag');
+            btn.style = 'margin:2px 5px 2px; border-radius: 12px; color:white'
+            // each tag will have a different color
+            btn.style.background=colors[Math.floor(Math.random()*colors.length)]; 
 
             btn.appendChild(document.createTextNode(description));
 
