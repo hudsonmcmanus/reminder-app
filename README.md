@@ -3,11 +3,11 @@
 ### Project Purpose
 
 - As part of our COMP 1800 course, the goal was to design and build a reminder application with these major features:
-  _ Create, edit, and delete reminders
-  _ Share reminders with friends in the application \* Functional user registration, login, and authentication
+  - Create, edit, and delete reminders
+  - Share reminders with friends in the application \* Functional user registration, login, and authentication
 - Practice collaboration with team members in an agile development setting:
-  _ Sprint planning, using a Trello board to keep track of tasks
-  _ Using git for version control and methods such as cloning, branching, committing, pull requests, and merging branches \* Project Management
+  - Sprint planning, using a Trello board to keep track of tasks
+  - Using git for version control and methods such as cloning, branching, committing, pull requests, and merging branches \* Project Management
 
 ---
 
@@ -62,8 +62,8 @@
 ### How to run locally
 
 - You must have node.js and mongoDB installed
-  _ https://nodejs.org/en/download/
-  _ https://www.mongodb.com/download-center/community
+  - https://nodejs.org/en/download/
+  - https://www.mongodb.com/download-center/community
 - Ensure that mongoDB is running
 - Navigate to the folder in your terminal
 - Type “npm install” to download the package dependencies
