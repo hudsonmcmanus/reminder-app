@@ -16,7 +16,7 @@
 - Kirk Wong kwong447@my.bcit.ca
 - Cindy Lu cindylu26810@gmail.com
 - Mike Sampson mikesampson68@gmail.com
-- Hudson McManus hudsonmcmanus@gmail.com
+- Hudson McManus hudson.mcmanus@gmail.com
 - Jessica Hong jeessicahong@gmail.com
 
 ---
