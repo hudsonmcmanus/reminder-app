@@ -104,6 +104,16 @@
 
 ---
 
+### Front End
+
+- Implemented Bootstrap for every page.
+- Uses Helvetica Neue font.
+- Color theme used were muted blues and greys. #6875a1 For navbar, #007bff For headers, and #222 for the footer.
+- Uses a simple and bright layout.
+- Mobile friendly.
+
+---
+
 ### Plan of Action
 
 [Plan Of Action](https://github.com/hudsonmcmanus/reminder-app/blob/master/PlanOfAction.md)
