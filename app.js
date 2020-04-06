@@ -8,15 +8,18 @@ const bodyParser = require('body-parser');
 const expressHandlebars = require('express-handlebars');
 const logSymbols = require('log-symbols');
 const { mongoose } = require('./database');
+const compression = require('compression');
 
 const jwt = require('./jwt');
 
 const app = express();
 
+app.use(compression());
+
 app.use(
 	rateLimit({
 		windowMs: 15 * 60 * 1000, // 15 minutes
-		max: 100 // limit each IP to 100 requests per windowMs
+		max: 100, // limit each IP to 100 requests per windowMs
 	})
 );
 
@@ -28,7 +31,7 @@ app.use(bodyParser.urlencoded());
 app.use(
 	jwt({
 		secret: config.jwtSecret,
-		expireIn: 60 * 60 * 24 * 7
+		expireIn: 60 * 60 * 24 * 7,
 	})
 );
 
@@ -38,9 +41,9 @@ app.engine(
 	expressHandlebars({
 		defaultLayout: false,
 		helpers: {
-			json: any => JSON.stringify(any),
-			jsonPretty: any => JSON.stringify(any, null, '  ')
-		}
+			json: (any) => JSON.stringify(any),
+			jsonPretty: (any) => JSON.stringify(any, null, '  '),
+		},
 	})
 );
 app.set('view engine', 'handlebars');
@@ -55,7 +58,7 @@ app.use('/', require('./router'));
 		await mongoose.connect(config.mongoURL, {
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
-			useFindAndModify: false
+			useFindAndModify: false,
 		});
 		console.log(logSymbols.success, 'MongoDB connected');
 	} catch (err) {
