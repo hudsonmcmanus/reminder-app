@@ -55,7 +55,7 @@
                         <label for="selectDate">Remind Me At:</label>
                         <input class="form-control" type="datetime-local" id="selectDate"
                                name="selectDate" onchange="dateChange()" required>
-                        <button type="button" id= "weatherBtn" style="border: 1px solid #e8e6e6;">🌂BRING AN UMBRELLA</button>
+                        <button type="button" id= "weatherBtn" style="border: 1px solid #e8e6e6;" onclick="dateChange()">🌂BRING AN UMBRELLA</button>
                     </div>
 
                     <div class="modal-footer">
@@ -68,6 +68,7 @@
         </div>
         </div>
     </div>
+    <p><a href="https://darksky.net/poweredby/" class="badge badge-secondary" style="text-align: center;">Powered by Dark Sky</a></p>
 
     <script
       src="https://code.jquery.com/jquery-3.4.1.min.js"
