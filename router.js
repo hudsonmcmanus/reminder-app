@@ -389,6 +389,6 @@ router.get('/export-json', grabUser, async (req, res, next) => {
 });
 
 // Serve files in the static folder
-router.use(express.static('static'));
+router.use(express.static('static', { maxAge: '7d' }));
 
 module.exports = router;

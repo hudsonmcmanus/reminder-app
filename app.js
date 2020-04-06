@@ -47,7 +47,7 @@ app.engine(
 	})
 );
 app.set('view engine', 'handlebars');
-// app.enable('view cache');
+app.enable('view cache');
 
 app.use('/', require('./router'));
 
