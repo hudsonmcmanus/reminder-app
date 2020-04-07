@@ -27,6 +27,17 @@
 
 ##### Tasks worked on:
 
+- Create Reminders
+  - Developed the /create handlebar
+  - Sync reminder creation to database in router.js
+- Front End
+  - Implemented Bootstrap for all page views
+  - Worked on most page views
+  - Created original website wireframe
+  - Worked on website navbar and footer  
+- Licence
+  - Added MIT Licence
+
 ---
 
 #### Mike Sampson
