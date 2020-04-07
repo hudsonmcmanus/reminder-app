@@ -55,7 +55,7 @@
                         <label for="selectDate">Remind Me At:</label>
                         <input class="form-control" type="datetime-local" id="selectDate"
                                name="selectDate" onchange="dateChange()" required>
-                        <button type="button" id= "weatherBtn" style="border: 1px solid #e8e6e6;" onclick="dateChange()" >🌂BRING AN UMBRELLA</button>
+                        <button type="button" id= "weatherBtn" style="border: 1px solid #e8e6e6;" onclick="getTemp()" >🌂BRING AN UMBRELLA</button>
                     </div>
 
                     <div class="modal-footer">
@@ -83,27 +83,27 @@
                 <td scope="row" id="day1Box"></td>
           </tr>
           <tr>
-              <td scope="row">2 days after today</td>
+              <td scope="row">2 days from today</td>
               <td id="day2Box" scope="row"></td>
           </tr>
           <tr>
-              <td scope="row">3 days after today</td>
+              <td scope="row">3 days from today</td>
               <td id="day3Box" scope="row"></td>
           </tr>
           <tr>
-              <td scope="row">4 days after today</td>
+              <td scope="row">4 days from today</td>
               <td id="day4Box" scope="row"></td>
           </tr>
           <tr>
-              <td scope="row">5 days after today</td>
+              <td scope="row">5 days from today</td>
               <td id="day5Box" scope="row"></td>
           </tr>
           <tr>
-              <td scope="row">6 days after today</td>
+              <td scope="row">6 days from today</td>
               <td id="day6Box" scope="row"></td>
           </tr>
           <tr>
-              <td scope="row">7 days after today</td>
+              <td scope="row">7 days from today</td>
               <td id="day7Box" scope="row"></td>
           </tr>
       </table>
