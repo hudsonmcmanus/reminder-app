@@ -1,23 +1,23 @@
 <nav class="navbar navbar-expand-md">
-	<a class="navbar-brand" href="/">Remindr</a>
+	<a class="navbar-brand" href="/"><img src="images/remindr-logo.png"></a>
 	<button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#main-navigation">
 		<span class="navbar-toggler-icon"></span>
 	</button>
 	<div class="collapse navbar-collapse" id="main-navigation">
 		<ul class="navbar-nav">
 			<li class="nav-item">
-				<a class="nav-link" href="/">Home</a>
+				<a class="nav-link" href="/">HOME</a>
 			</li>
 			{{#if user}}
 			<li class="nav-item">
-				<a class="nav-link" href="/logout">Log Out</a>
+				<a class="nav-link" href="/logout">LOG OUT</a>
 			</li>
 			{{else}}
 			<li class="nav-item">
-				<a class="nav-link" href="/login">Login</a>
+				<a class="nav-link" href="/login">LOGIN</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="/register">Register</a>
+				<a class="nav-link" href="/register">REGISTER</a>
 			</li>
 			{{/if}}
 		</ul>
