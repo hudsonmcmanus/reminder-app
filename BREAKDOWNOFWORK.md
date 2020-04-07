@@ -34,7 +34,8 @@
   - Implemented Bootstrap and worked on almost all page views
   - Created dropdown menu in navbar
   - Created original website wireframe
-  - Worked on website navbar and footer  
+  - Worked on website navbar and footer
+  - Created main css file for custom CSS and fade in animations
 - Licence
   - Added MIT Licence
 
