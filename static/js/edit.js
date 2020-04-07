@@ -13,8 +13,10 @@ let tagList = document.getElementById("tagListEdit");
 
 let dateObj = new Date(document.getElementById("existingDate").innerHTML);
 
+console.log(dateObj)
+
 // Populate existing reminder datetime
-document.getElementById("pickDate").value = dateObj.toISOString().substring(0, 10) + "T" + dateObj.getHours() + ":" + addZero(dateObj.getMinutes());
+document.getElementById("pickDate").value = dateObj.toISOString().substring(0, 10) + "T" + addZero(dateObj.getHours()) + ":" + addZero(dateObj.getMinutes());
 
 function addZero(i) {
   if (i < 10) {
