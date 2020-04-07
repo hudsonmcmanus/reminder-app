@@ -3,7 +3,9 @@
 ---
 
 #### Kirk Wong
+
 ##### Tasks worked on:
+
 - Edit Reminders
   - Implemented the edit page and the logic behind editing reminders
 - Reminder Associations (Subtasks, Date)
@@ -11,24 +13,37 @@
 - Social Reminders (Add Friend, Share Reminders)
   - Implemented the ability to add other users as friends and share reminders with them
 - Documentation
-  - Wrote documentation for our application 
+  - Wrote documentation for our application
 
 ---
 
 #### Jessica Hong
+
 ##### Tasks worked on:
 
 ---
 
 #### Hudson McManus
+
 ##### Tasks worked on:
 
 ---
 
 #### Mike Sampson
+
 ##### Tasks worked on:
+
+- Database Setup
+  - MongoDB connection using Mongoose
+  - Document schematics
+- Authentication
+  - Registering and logging in using bcrypt hashed passwords
+  - Login sessions using JWT cookies
+- Backup Creation
+  - Exporting all your reminders to a single JSON file
 
 ---
 
 #### Cindy Lu
+
 ##### Tasks worked on:
