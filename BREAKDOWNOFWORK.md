@@ -31,8 +31,8 @@
   - Developed the /create handlebar
   - Sync reminder creation to database in router.js
 - Front End
-  - Implemented Bootstrap for all page views
-  - Worked on most page views
+  - Implemented Bootstrap and worked on almost all page views
+  - Created dropdown menu in navbar
   - Created original website wireframe
   - Worked on website navbar and footer  
 - Licence
