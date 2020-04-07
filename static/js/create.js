@@ -151,13 +151,13 @@ function tagDisplay(description) {
         navigator.geolocation.getCurrentPosition(function(position){
                 userLatitude = position.coords.latitude
                 userLongitude = position.coords.longitude
-                // get weather forcast on specific day and specific location
+                // get weather forecast on specific day and specific location
                 forcast(userLatitude,userLongitude,numUnix);
             
         })
     }
 
-    // get the forcast information from darksky API
+    // get the forecast information from darksky API
     function forcast(latitude, longitude, time){
         const proxy = 'https://cors-anywhere.herokuapp.com/'
         const api = proxy+'https://api.darksky.net/forecast/5cdbb6801362ee38b81b258430c5f51c/'+latitude+","+longitude+","+time;
@@ -186,14 +186,14 @@ function tagDisplay(description) {
             })
     }
 
-    // when user click the 'bring umbrella btn' -> show the next 7 day temp forcast
+    // when user click the 'bring umbrella btn' -> show the next 7 day temp forecast
     function getTemp(){
         // get userlocation
         navigator.geolocation.getCurrentPosition(function(position){
                 userLatitude = position.coords.latitude
                 userLongitude = position.coords.longitude
 
-                // get tempforcast for the next seven days
+                // get forecast for the next seven days
                 tempForcast(userLatitude, userLongitude);
         })
     }
@@ -207,13 +207,11 @@ function tagDisplay(description) {
                 return res.json();
             })
             .then(data =>{
-                // [summary]
-                console.log(data)
                 // day 0
                 const day0High = data.daily.data[0].temperatureHigh;
                 const day0Low = data.daily.data[0].temperatureLow;
                 const day0temp = Math.round(((day0High+ day0Low)/2 -32)*5/9);   // convert all the temp to degree celcious
-                document.getElementById("day0Box").innerHTML = day0temp; // add average temperature into the forest table
+                document.getElementById("day0Box").innerHTML = day0temp; // add average temperature into the forecast table
 
                 // day 1
                 const day1High = data.daily.data[1].temperatureHigh;
@@ -257,7 +255,7 @@ function tagDisplay(description) {
                 const day7temp = Math.round(((day7High+ day7Low)/2 -32)*5/9);
                 document.getElementById("day7Box").innerHTML = day7temp;
 
-                // show tempDive on html
+                // show tempDiv on html
                 document.getElementById("tempDiv").style.display = 'block';
             
             })
