@@ -67,3 +67,13 @@
 #### Cindy Lu
 
 ##### Tasks worked on:
+- Reminder Associations
+  - Implemented the logic behind adding tags to reminders
+- Weather + Geolocation API 
+  - Implemented the weather and geolocation feature to the reminders by using DarkSky Weather API and HTML5 Geolocation API
+- Front End
+  - Worked on draft of the front end
+  - Worked on overall css of the application
+- Trello Board
+  - Created Trello board
+
