@@ -19,7 +19,7 @@ let tagHidden = document.getElementById("tagHidden");
 let today = new Date();
 let time = today.getHours() + ":" + today.getMinutes();
 
-document.getElementById("selectDate").value = today.toISOString().substring(0, 10) + "T" + today.getHours() + ":" + addZero(today.getMinutes()); 
+document.getElementById("selectDate").value = today.toISOString().substring(0, 10) + "T" + addZero(today.getHours()) + ":" + addZero(today.getMinutes()); 
 
 function addZero(i) {
   if (i < 10) {
