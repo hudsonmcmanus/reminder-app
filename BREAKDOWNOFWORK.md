@@ -20,6 +20,14 @@
 #### Jessica Hong
 
 ##### Tasks worked on:
+- Create Reminders
+  - Developed the /create handlebar & implemented the logic for creating reminders
+- Delete Reminders
+  - Developed the /delete-reminder handlebar & implemented the logic for deleting reminders
+- Front End
+  - Created logo graphic for website using PhotoShop
+  - Created and maintained landing-page for website
+  - Worked on website navbar and footer
 
 ---
 
