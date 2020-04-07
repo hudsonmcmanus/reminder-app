@@ -114,10 +114,12 @@
 
 ---
 
-### Leftover Features
+### Incomplete Features
 
 - User is able to import reminders using the json file that was exported
+    - Approach: Parse the json file and loop through entire list, storing each reminder as it's own document in the database.
 - Reminders that are shared with friends will have to be accepted before showing up on their main page
+    - Approach: Add an additional page that would show reminders that have been shared with the user, giving the option to accept them as their own.
 
 ---
 
