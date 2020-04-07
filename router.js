@@ -332,8 +332,24 @@ router.post('/edit-reminder', async (req, res) => {
 		tagHiddenEdit,
 		editReminderID,
 	} = req.body;
-	let subtasks_array = JSON.parse(subtaskHiddenEdit);
-	let tags_array = JSON.parse(tagHiddenEdit);
+	
+	let subtasks_array;
+	let tags_array;
+
+	if (subtaskHiddenEdit) {
+		subtasks_array = JSON.parse(subtaskHiddenEdit);
+	}
+	else {
+		let subtasks_array = [];
+	}
+
+	if (tagHiddenEdit) {
+		tags_array = JSON.parse(tagHiddenEdit);
+	}
+	else {
+		let tags_array = [];
+	}
+	
 	// creating new date object using the input from user
 	let dateObj = new Date(pickDate + ':00');
 

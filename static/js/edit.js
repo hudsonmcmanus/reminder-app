@@ -14,7 +14,14 @@ let tagList = document.getElementById("tagListEdit");
 let dateObj = new Date(document.getElementById("existingDate").innerHTML);
 
 // Populate existing reminder datetime
-document.getElementById("pickDate").value = dateObj.toISOString().substring(0, 10) + "T" + dateObj.getHours() + ":" + dateObj.getMinutes();
+document.getElementById("pickDate").value = dateObj.toISOString().substring(0, 10) + "T" + dateObj.getHours() + ":" + addZero(dateObj.getMinutes());
+
+function addZero(i) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  return i;
+}
 
 // Populate the existing subtasks into the array
 let existingSubtasks = subtaskList.getElementsByClassName("existingSubtasks");
