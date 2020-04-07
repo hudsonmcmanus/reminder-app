@@ -68,7 +68,7 @@
 - Navigate to the folder in your terminal
 - Type “npm install” to download the package dependencies
 - Create a config.json file that sets the port, database URL, and jwt secret \* config.json can be an exact copy of the config.sample.json
-- Run the app using the terminal command: “node app”
+- Run the app using the terminal command: “node app.js”
 - In your browser, navigate to http://localhost:3000/ (port is 3000 if you copied the config)
 
 ---
