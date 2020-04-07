@@ -8,35 +8,35 @@ const reminderSchema = new Schema(
 	{
 		name: {
 			type: String,
-			required: true
+			required: true,
 		},
 		author: {
 			type: Schema.Types.ObjectId,
 			ref: 'User',
-			required: true
+			required: true,
 		},
 		sharedWith: [
 			{
 				type: Schema.Types.ObjectId,
-				ref: 'User'
-			}
+				ref: 'User',
+			},
 		],
 		description: String,
 		tags: [String],
 		subtasks: [
 			{
 				completed: Boolean,
-				description: String
-			}
+				description: String,
+			},
 		],
 		date: {
 			type: Date,
-			required: true
-		}
+			required: true,
+		},
 	},
 	{
 		// Adds and auto-manages 'createdAt' and 'updatedAt' dates
-		timestamps: true
+		timestamps: true,
 	}
 );
 
@@ -44,26 +44,26 @@ const userSchema = new Schema(
 	{
 		username: {
 			type: String,
-			required: true
+			required: true,
 		},
 		password: {
 			type: String,
-			required: true
+			required: true,
 		},
 		friends: [
 			{
 				type: Schema.Types.ObjectId,
-				ref: 'User'
-			}
-		]
+				ref: 'User',
+			},
+		],
 	},
 	{
-		timestamps: true
+		timestamps: true,
 	}
 );
 
 // Hash user passwords before sending to database
-userSchema.pre('save', async function() {
+userSchema.pre('save', async function () {
 	if (this.isModified('password')) {
 		const hash = await bcrypt.hash(this.password, passwordSaltRounds);
 		this.password = hash;
@@ -76,5 +76,5 @@ const User = mongoose.model('User', userSchema);
 module.exports = {
 	mongoose,
 	Reminder,
-	User
+	User,
 };

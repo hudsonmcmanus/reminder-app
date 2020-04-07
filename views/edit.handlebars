@@ -2,92 +2,91 @@
 <html lang="en">
 
 <head>
-    <title>Remindr: An Everyday Use App!</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="/main.css" />
-    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
-    <!-- https://fontawesome.bootstrapcheatsheets.com/ -->
+	<title>Remindr: An Everyday Use App!</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="/main.css" />
+	<link rel="stylesheet" type="text/css"
+		href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+	<!-- https://fontawesome.bootstrapcheatsheets.com/ -->
 </head>
+
 <body>
-    {{> navbar-landing-page}}
+	{{> navbar-landing-page}}
 
-    <div class="modal-fade fadeIn" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Edit Reminder</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true" onclick="redirect()">&times;</span>
-            </button>        
-          </div>
-          <div class="modal-body fadeIn">
-                <form action="/edit-reminder" method="POST">
-                    <div class="form-group">
-                        <input name="editReminderID" type="hidden" value="{{reminder._id}}">
-                        <input type="text" class="form-control" name="name" placeholder="Reminder Title" value="{{reminder.name}}" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="description" placeholder="Description" value="{{reminder.description}}">
-                    </div>
-                    <ul class='list-group' id="subtaskListEdit">
-                        {{#each reminder.subtasks}}
-                            <li class="existingSubtasks wordWrap list-group-item">
-                                <input type="checkbox" name="subtaskCheck" class="subtaskCheck" 
-                                {{#if completed}}                                
-                                    checked
-                                {{/if}}
-                                >
-                                {{description}}
-                                <input type="hidden" class="subtaskCompleted" name="subtaskCompleted" value="{{completed}}">
-                                <button type="button" class="deleteSubtask btn btn-secondary float-right">Delete</button>
-                            </li>
-                        {{/each}}
-                    </ul>
-                    <input type="hidden" id="subtaskHiddenEdit" name="subtaskHiddenEdit">
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="subtasksEdit" placeholder="New Subtask" id="newSubtaskEdit">
-                        <button type="button" class="btn btn-success" onclick="addSubtask()">Add</button>
-                    </div>
+	<div class="modal-fade fadeIn" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Edit Reminder</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true" onclick="redirect()">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body fadeIn">
+					<form action="/edit-reminder" method="POST">
+						<div class="form-group">
+							<input name="editReminderID" type="hidden" value="{{reminder._id}}">
+							<input type="text" class="form-control" name="name" placeholder="Reminder Title" value="{{reminder.name}}"
+								required>
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control" name="description" placeholder="Description"
+								value="{{reminder.description}}">
+						</div>
+						<ul class='list-group' id="subtaskListEdit">
+							{{#each reminder.subtasks}}
+							<li class="existingSubtasks wordWrap list-group-item">
+								<input type="checkbox" name="subtaskCheck" class="subtaskCheck" {{#if completed}} checked {{/if}}>
+								{{description}}
+								<input type="hidden" class="subtaskCompleted" name="subtaskCompleted" value="{{completed}}">
+								<button type="button" class="deleteSubtask btn btn-secondary float-right">Delete</button>
+							</li>
+							{{/each}}
+						</ul>
+						<input type="hidden" id="subtaskHiddenEdit" name="subtaskHiddenEdit">
+						<div class="form-group">
+							<input type="text" class="form-control" name="subtasksEdit" placeholder="New Subtask" id="newSubtaskEdit">
+							<button type="button" class="btn btn-success" onclick="addSubtask()">Add</button>
+						</div>
 
-                    <div id="tagListEdit">
-                        {{#each reminder.tags}}
-                            <button class="existingTags wordWrap" style ="margin:2px 5px 2px; border-radius: 12px; color:white; background-color: #c7dbf0;" disabled>
-                                {{this}}                                
-                                <i class="fa fa-trash-o deleteTag"></i>
-                            </button>
-                        {{/each}}
-                    </div>
-                    <input type="hidden" id="tagHiddenEdit" name="tagHiddenEdit">
-                    <div class="form-group" id="tag-container">
-                        <input type="text" class="form-control" name="tags" placeholder="New Tag" id="newTagEdit">
-                         <button type="button" class="btn btn-success" onclick="addTag()">Add</button>
-                    </div>
+						<div id="tagListEdit">
+							{{#each reminder.tags}}
+							<button class="existingTags wordWrap"
+								style="margin:2px 5px 2px; border-radius: 12px; color:white; background-color: #c7dbf0;" disabled>
+								{{this}}
+								<i class="fa fa-trash-o deleteTag"></i>
+							</button>
+							{{/each}}
+						</div>
+						<input type="hidden" id="tagHiddenEdit" name="tagHiddenEdit">
+						<div class="form-group" id="tag-container">
+							<input type="text" class="form-control" name="tags" placeholder="New Tag" id="newTagEdit">
+							<button type="button" class="btn btn-success" onclick="addTag()">Add</button>
+						</div>
 
-                    <div class="form-group">
-                        <p id="existingDate"hidden>{{reminder.date}}</p>
-                        <label for="pickDate">Remind Me At:</label>
-                        <input class="form-control" type="datetime-local" id="pickDate"
-                               name="pickDate" required>
-                    </div>
+						<div class="form-group">
+							<p id="existingDate" hidden>{{reminder.date}}</p>
+							<label for="pickDate">Remind Me At:</label>
+							<input class="form-control" type="datetime-local" id="pickDate" name="pickDate" required>
+						</div>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="redirect()">Close</button>
-                        <button type="submit" class="btn btn-primary">Save Edits</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-      </div>
-    </div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="redirect()">Close</button>
+							<button type="submit" class="btn btn-primary">Save Edits</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 
-    <script
-          src="https://code.jquery.com/jquery-3.4.1.min.js"
-          integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-          crossorigin="anonymous">
-    </script>
-    <script src="/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/js/edit.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous">
+		</script>
+	<script src="/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/js/edit.js"></script>
 </body>
+
 </html>
