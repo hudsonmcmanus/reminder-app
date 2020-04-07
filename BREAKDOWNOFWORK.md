@@ -69,8 +69,8 @@
 ##### Tasks worked on:
 - Reminder Associations
   - Implemented the logic behind adding tags to reminders
-- Weather + Geolocation API 
-  - Implemented the weather and geolocation feature to the reminders by using DarkSky Weather API and HTML5 Geolocation API
+- Weather + Temperature Forecast
+  - Implemented the weather, temperature and geolocation feature to the reminders by using DarkSky Weather API and HTML5 Geolocation API
 - Front End
   - Worked on overall css of the application
 - Trello Board
