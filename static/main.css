@@ -460,3 +460,8 @@ input[type='password']:placeholder {
 .underlineHover:hover:after {
 	width: 100%;
 }
+
+/* Simple CSS3 for Temp Forecast */
+#tempDiv{
+	display: none;
+}
