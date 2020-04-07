@@ -114,6 +114,13 @@
 
 ---
 
+### Leftover Features
+
+- User is able to import reminders using the json file that was exported
+- Reminders that are shared with friends will have to be accepted before showing up on their main page
+
+---
+
 ### Plan of Action
 
 [Plan Of Action](https://github.com/hudsonmcmanus/reminder-app/blob/master/PlanOfAction.md)
