@@ -28,6 +28,9 @@
   - Created logo graphic for website using PhotoShop
   - Created and maintained landing-page for website
   - Worked on website navbar and footer
+  - Worked on website's wireframe diagram using figma
+- Documentation
+  - Created first iteration of Plan Of Action document
 
 ---
 
