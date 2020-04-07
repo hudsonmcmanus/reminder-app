@@ -9,7 +9,7 @@ ul {
 	padding-left: 0;
 }
 
-ul li{
+ul li {
 	list-style-type: none;
 }
 
@@ -20,7 +20,7 @@ ul li{
 }
 
 .customNavBar {
-	border-bottom: 2px solid rgb(59, 59, 83)
+	border-bottom: 2px solid rgb(59, 59, 83);
 }
 
 .share-reminder {
@@ -50,7 +50,7 @@ ul li{
 .teamLink {
 	color: white;
 	text-decoration: none;
-	transition: .3s all;
+	transition: 0.3s all;
 }
 
 .teamLink:hover {
@@ -72,7 +72,7 @@ ul li{
 	padding: 0.5em;
 }
 
-#toolsList li{
+#toolsList li {
 	background-color: rgba(255, 255, 255, 0.3);
 }
 
@@ -95,7 +95,7 @@ ul li{
 
 .nav-link {
 	margin-right: 1em !important;
-	transition: .3s all;
+	transition: 0.3s all;
 }
 
 .nav-link:hover {
@@ -158,9 +158,8 @@ ul li{
 
 /*Friend search bar*/
 #searchInput {
-	width:100%;
+	width: 100%;
 }
-
 
 .wordWrap {
 	overflow-wrap: break-word;
@@ -462,6 +461,6 @@ input[type='password']:placeholder {
 }
 
 /* Simple CSS3 for Temp Forecast */
-#tempDiv{
+#tempDiv {
 	display: none;
 }
