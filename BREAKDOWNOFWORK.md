@@ -39,8 +39,10 @@
 ##### Tasks worked on:
 
 - Create Reminders
-  - Developed the /create handlebar
+  - Developed the /create handlebar & helped implement the logic for creating reminders
   - Sync reminder creation to database in router.js
+- Delete Reminders
+  - Worked on the logic for deleting reminders
 - Front End
   - Implemented Bootstrap and worked on almost all page views
   - Created dropdown menu in navbar
@@ -49,6 +51,8 @@
   - Created main css file for custom CSS and fade in animations
 - Licence
   - Added MIT Licence
+- Bug Fixing & Testing
+  - Worked on fixing bugs and testing deliverables
 
 ---
 
