@@ -27,6 +27,7 @@
     "jsonwebtoken": "^8.5.1",
     "log-symbols": "^3.0.0",
     "mongoose": "^5.9.3",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "nodemon": "^2.0.2"
   }
 }
