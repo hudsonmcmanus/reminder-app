@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) [2020] [Hudson McManus]
+Copyright (c) [2020] [Hudson McManus] [Mike Sampson] [Kirk Wong] [Jessica Hong] [Cindy Lu]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
