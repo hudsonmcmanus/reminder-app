@@ -6,10 +6,12 @@
 
 - As part of our COMP 1800 course, the goal was to design and build a reminder application with these major features:
   - Create, edit, and delete reminders
-  - Share reminders with friends in the application \* Functional user registration, login, and authentication
+  - Share reminders with friends in the application 
+  - Functional user registration, login, and authentication
 - Practice collaboration with team members in an agile development setting:
   - Sprint planning, using a Trello board to keep track of tasks
-  - Using git for version control and methods such as cloning, branching, committing, pull requests, and merging branches \* Project Management
+  - Using git for version control and methods such as cloning, branching, committing, pull requests, and merging branches 
+  - Project Management
 
 ---
 
@@ -122,11 +124,12 @@
     - Approach: Parse the json file and loop through entire list, storing each reminder as it's own document in the database.
 - Reminders that are shared with friends will have to be accepted before showing up on their main page
     - Approach: Add an additional page that would show reminders that have been shared with the user, giving the option to accept them as their own.
-- Notification
-- Better description design
-- Better subtasks design
-- Tags filtering
-
+- User is notified about the current day's reminder
+    - Approach: Separate the main reminder page so that at the top there are a list of reminders for the current day
+- Improve description input box design
+    - Approach: Enlarge description input so that it spans more than just one line of text
+- User is able to filter reminders by tags
+    - Approach: Implement a filter feature on the main page to filter reminders by the tags they are associated with
 ---
 
 ### Plan of Action
